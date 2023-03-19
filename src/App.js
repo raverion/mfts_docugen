@@ -36,6 +36,11 @@ const App = () => {
     setInputFields(updatedFields);
   };
 
+  const handleGenerateDocument = () => {
+    // Generate document based on input fields
+    console.log("Generating document:", fields);
+  };
+
   const renderInputFields = () => {
     if (selectedOption === "") {
       return null;
@@ -152,6 +157,7 @@ const App = () => {
         ))}
       </div>
       <button onClick={handleAddField}>Add Item</button>
+      <button onClick={handleGenerateDocument}>Generate</button>
     </div>
   );
 };
