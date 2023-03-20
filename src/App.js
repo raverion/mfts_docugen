@@ -1,12 +1,17 @@
 // import logo from "./logo.svg";
 import "./App.css";
 import React, { useState } from "react";
+import { useEffect } from "react";
 
 const App = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [inputFields, setInputFields] = useState([]);
 
   const [fields, setFields] = useState([{ label: "", value: "" }]);
+
+  useEffect(() => {
+    document.title = "MFTS Docugen";
+  }, []);
 
   const handleAddField = () => {
     setFields([...fields, { label: "", value: "" }]);
@@ -90,12 +95,16 @@ const App = () => {
         { name: "Date", label: "Date:" },
         { name: "QuoteNum", label: "Quotation #:" },
         { name: "Title", label: "Title:" },
+        { name: "Duration", label: "Project Duration:" },
         { name: "CorpDiscount", label: "Corporate discount (%):" },
       ],
       Option4: [
-        { name: "field4", label: "Field 4" },
-        { name: "field5", label: "Field 5" },
-        { name: "field6", label: "Field 6" },
+        { name: "To", label: "To:" },
+        { name: "Address", label: "Address:" },
+        { name: "Date", label: "Date:" },
+        { name: "InvoiceNum", label: "Invoice/s #:" },
+        { name: "Title", label: "Title:" },
+        { name: "CorpDiscount", label: "Corporate discount (%):" },
       ],
     };
 
