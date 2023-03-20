@@ -53,10 +53,11 @@ const App = () => {
 
       return (
         <div key={index}>
-          <label>{label}</label>
+          <label className="labels">{label}</label>
           <input
             type="text"
             name={name}
+            className="inputField"
             onChange={(e) => handleInputChange(e, index)}
           />
         </div>
@@ -68,16 +69,28 @@ const App = () => {
     // Define the input fields for each option
     const options = {
       Option1: [
-        { name: "field1", label: "To:" },
-        { name: "field2", label: "Address:" },
-        { name: "field3", label: "Date:" },
-        { name: "field2", label: "Invoice #:" },
+        { name: "To", label: "To:" },
+        { name: "Address", label: "Address:" },
+        { name: "Date", label: "Date:" },
+        { name: "InvoiceNum", label: "Invoice #:" },
+        { name: "Title", label: "Title:" },
+        { name: "CorpDiscount", label: "Corporate discount (%):" },
       ],
-      Option2: [{ name: "field3", label: "Field 3" }],
+      Option2: [
+        { name: "To", label: "To:" },
+        { name: "Address", label: "Address:" },
+        { name: "Date", label: "Date:" },
+        { name: "InvoiceNum", label: "Invoice #:" },
+        { name: "Title", label: "Title:" },
+        { name: "CorpDiscount", label: "Corporate discount (%):" },
+      ],
       Option3: [
-        { name: "field4", label: "Field 4" },
-        { name: "field5", label: "Field 5" },
-        { name: "field6", label: "Field 6" },
+        { name: "To", label: "To:" },
+        { name: "Address", label: "Address:" },
+        { name: "Date", label: "Date:" },
+        { name: "QuoteNum", label: "Quotation #:" },
+        { name: "Title", label: "Title:" },
+        { name: "CorpDiscount", label: "Corporate discount (%):" },
       ],
       Option4: [
         { name: "field4", label: "Field 4" },
@@ -90,8 +103,10 @@ const App = () => {
   };
 
   return (
-    <div>
-      <label htmlFor="dropdown">Select Document Type:</label>
+    <div className="App">
+      <label htmlFor="dropdown" className="dropdownLabel">
+        Select Document Type:
+      </label>
       <select
         id="dropdown"
         value={selectedOption}
@@ -105,6 +120,7 @@ const App = () => {
       </select>
 
       <div>{renderInputFields()}</div>
+      <div className="separator"></div>
 
       <div>
         {fields.map((field, index) => (
@@ -162,6 +178,8 @@ const App = () => {
   );
 };
 
+export default App;
+
 // function App() {
 //   return (
 //     <div className="App">
@@ -182,5 +200,4 @@ const App = () => {
 //     </div>
 //   );
 // }
-
-export default App;
+// export default App;

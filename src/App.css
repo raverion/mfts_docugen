@@ -1,4 +1,37 @@
+body {
+  /* background-color: ; */
+}
+
 .App {
+}
+
+.dropdownLabel,
+#dropdown {
+  margin: 5px;
+  margin-bottom: 20px;
+}
+
+.labels,
+.inputField {
+  margin: 2px;
+}
+
+.labels {
+  margin-left: 20px;
+  text-align: left;
+  min-width: 200px;
+  display: inline-block;
+}
+
+.inputField {
+  min-width: 500px;
+}
+
+.separator {
+  height: 10px;
+}
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +68,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
