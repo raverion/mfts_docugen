@@ -134,7 +134,8 @@ const App = () => {
 
       <div>{renderInputFields()}</div>
       <div className="separator"></div>
-
+      <div className="particulars_label">Particulars:</div>
+      <div className="separator"></div>
       <div>
         {tableFields.map((field, index) => (
           <div key={index}>
