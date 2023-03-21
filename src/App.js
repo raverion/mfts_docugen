@@ -55,6 +55,7 @@ const App = () => {
     // Define the input fields for each option
     const options = {
       Option1: [
+        // Acknowledgement Receipt
         { name: "To", label: "To:" },
         { name: "Address", label: "Address:" },
         { name: "Date", label: "Date:" },
@@ -63,6 +64,7 @@ const App = () => {
         { name: "CorpDiscount", label: "Corporate discount (%):" },
       ],
       Option2: [
+        // Invoice
         { name: "To", label: "To:" },
         { name: "Address", label: "Address:" },
         { name: "Date", label: "Date:" },
@@ -71,6 +73,7 @@ const App = () => {
         { name: "CorpDiscount", label: "Corporate discount (%):" },
       ],
       Option3: [
+        // Quotation
         { name: "To", label: "To:" },
         { name: "Address", label: "Address:" },
         { name: "Date", label: "Date:" },
@@ -78,8 +81,10 @@ const App = () => {
         { name: "Title", label: "Title:" },
         { name: "Duration", label: "Project Duration:" },
         { name: "CorpDiscount", label: "Corporate discount (%):" },
+        { name: "Warranty", label: "Warranty:" },
       ],
       Option4: [
+        // Statement of Account
         { name: "To", label: "To:" },
         { name: "Address", label: "Address:" },
         { name: "Date", label: "Date:" },
@@ -95,12 +100,12 @@ const App = () => {
 
   //-------------------------------------------------------------------------------------------------------
   // TABLE FIELDS
-  const [tableFields, setFields] = useState([{ label: "", value: "" }]);
+  const [particularsFields, setFields] = useState([{ label: "", value: "" }]);
   const handleAddField = () => {
-    setFields([...tableFields, { label: "", value: "" }]);
+    setFields([...particularsFields, { label: "", value: "" }]);
   };
   const handleRemoveField = (index) => {
-    const values = [...tableFields];
+    const values = [...particularsFields];
     values.splice(index, 1);
     setFields(values);
   };
@@ -109,7 +114,7 @@ const App = () => {
   //-------------------------------------------------------------------------------------------------------
   // "Generate" BUTTON
   const handleGenerateDocument = () => {
-    console.log("Generating document:", tableFields); // Generate document based on input fields
+    console.log("Generating document:", particularsFields); // Generate document based on input fields
   };
   //-------------------------------------------------------------------------------------------------------
 
@@ -137,7 +142,7 @@ const App = () => {
       <div className="particulars_label">Particulars:</div>
       <div className="separator"></div>
       <div>
-        {tableFields.map((field, index) => (
+        {particularsFields.map((field, index) => (
           <div key={index}>
             <label htmlFor={`description${index}`}>Description:</label>
             <input
