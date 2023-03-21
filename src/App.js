@@ -4,33 +4,19 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 
 const App = () => {
-  const [selectedOption, setSelectedOption] = useState("");
-  const [inputFields, setInputFields] = useState([]);
-
-  const [fields, setFields] = useState([{ label: "", value: "" }]);
-
   useEffect(() => {
     document.title = "MFTS Docugen";
   }, []);
 
-  const handleAddField = () => {
-    setFields([...fields, { label: "", value: "" }]);
-  };
-
-  const handleRemoveField = (index) => {
-    const values = [...fields];
-    values.splice(index, 1);
-    setFields(values);
-  };
-
+  //-------------------------------------------------------------------------------------------------------
+  // HEADER FIELDS
+  const [selectedOption, setSelectedOption] = useState("");
+  const [inputFields, setInputFields] = useState([]);
   const handleOptionChange = (e) => {
     const value = e.target.value;
     setSelectedOption(value);
-
-    // Reset the input fields whenever the selected option changes
-    setInputFields([]);
+    setInputFields([]); // Reset the input fields whenever the selected option changes
   };
-
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const updatedFields = [...inputFields];
@@ -39,11 +25,6 @@ const App = () => {
       [name]: value,
     };
     setInputFields(updatedFields);
-  };
-
-  const handleGenerateDocument = () => {
-    // Generate document based on input fields
-    console.log("Generating document:", fields);
   };
 
   const renderInputFields = () => {
@@ -110,7 +91,30 @@ const App = () => {
 
     return options[option] || [];
   };
+  //-------------------------------------------------------------------------------------------------------
 
+  //-------------------------------------------------------------------------------------------------------
+  // TABLE FIELDS
+  const [tableFields, setFields] = useState([{ label: "", value: "" }]);
+  const handleAddField = () => {
+    setFields([...tableFields, { label: "", value: "" }]);
+  };
+  const handleRemoveField = (index) => {
+    const values = [...tableFields];
+    values.splice(index, 1);
+    setFields(values);
+  };
+  //-------------------------------------------------------------------------------------------------------
+
+  //-------------------------------------------------------------------------------------------------------
+  // "Generate" BUTTON
+  const handleGenerateDocument = () => {
+    console.log("Generating document:", tableFields); // Generate document based on input fields
+  };
+  //-------------------------------------------------------------------------------------------------------
+
+  //-------------------------------------------------------------------------------------------------------
+  // JSX
   return (
     <div className="App">
       <label htmlFor="dropdown" className="dropdownLabel">
@@ -132,7 +136,7 @@ const App = () => {
       <div className="separator"></div>
 
       <div>
-        {fields.map((field, index) => (
+        {tableFields.map((field, index) => (
           <div key={index}>
             <label htmlFor={`description${index}`}>Description:</label>
             <input
