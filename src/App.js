@@ -2,6 +2,7 @@
 import "./App.css";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import jsPDF from "jspdf";
 
 const App = () => {
   useEffect(() => {
@@ -35,7 +36,7 @@ const App = () => {
     const optionFields = getOptionFields(selectedOption);
 
     return optionFields.map((field, index) => {
-      const { name, label } = field;
+      const { name, label, placeholder } = field;
 
       return (
         <div key={index}>
@@ -43,6 +44,7 @@ const App = () => {
           <input
             type="text"
             name={name}
+            placeholder={placeholder}
             className="inputField"
             onChange={(e) => handleInputChange(e, index)}
           />
@@ -56,41 +58,125 @@ const App = () => {
     const options = {
       Option1: [
         // Acknowledgement Receipt
-        { name: "To", label: "To:" },
-        { name: "Address", label: "Address:" },
-        { name: "Date", label: "Date:" },
-        { name: "InvoiceNum", label: "Invoice #:" },
-        { name: "Title", label: "Title:" },
-        { name: "CorpDiscount", label: "Corporate discount (%):" },
+        {
+          name: "To",
+          label: "To:",
+          placeholder:
+            "Name of Client / Company (e.g. Mr. Jones; Lubeck Shipping, LLC.; etc.)",
+        },
+        {
+          name: "Address",
+          label: "Address:",
+          placeholder: "Location of Client / Project",
+        },
+        { name: "Date", label: "Date:", placeholder: "01-October-2022" },
+        { name: "InvoiceNum", label: "Invoice #:", placeholder: "INVxxxx" },
+        {
+          name: "Title",
+          label: "Title:",
+          placeholder: "Summarize the project in 10 words or less",
+        },
+        {
+          name: "CorpDiscount",
+          label: "Corporate discount (%):",
+          placeholder: "This is optional",
+        },
       ],
       Option2: [
         // Invoice
-        { name: "To", label: "To:" },
-        { name: "Address", label: "Address:" },
-        { name: "Date", label: "Date:" },
-        { name: "InvoiceNum", label: "Invoice #:" },
-        { name: "Title", label: "Title:" },
-        { name: "CorpDiscount", label: "Corporate discount (%):" },
+        {
+          name: "To",
+          label: "To:",
+          placeholder:
+            "Name of Client / Company (e.g. Mr. Jones; Lubeck Shipping, LLC.; etc.)",
+        },
+        {
+          name: "Address",
+          label: "Address:",
+          placeholder: "Location of Client / Project",
+        },
+        { name: "Date", label: "Date:", placeholder: "01-October-2022" },
+        { name: "InvoiceNum", label: "Invoice #:", placeholder: "INVxxxx" },
+        {
+          name: "Title",
+          label: "Title:",
+          placeholder: "Summarize the project in 10 words or less",
+        },
+        {
+          name: "CorpDiscount",
+          label: "Corporate discount (%):",
+          placeholder: "This is optional",
+        },
       ],
       Option3: [
         // Quotation
-        { name: "To", label: "To:" },
-        { name: "Address", label: "Address:" },
-        { name: "Date", label: "Date:" },
-        { name: "QuoteNum", label: "Quotation #:" },
-        { name: "Title", label: "Title:" },
-        { name: "Duration", label: "Project Duration:" },
-        { name: "CorpDiscount", label: "Corporate discount (%):" },
-        { name: "Warranty", label: "Warranty:" },
+        {
+          name: "To",
+          label: "To:",
+          placeholder:
+            "Name of Client / Company (e.g. Mr. Jones; Lubeck Shipping, LLC.; etc.)",
+        },
+        {
+          name: "Address",
+          label: "Address:",
+          placeholder: "Location of Client / Project",
+        },
+        { name: "Date", label: "Date:", placeholder: "01-October-2022" },
+        {
+          name: "QuoteNum",
+          label: "Quotation #:",
+          placeholder: "MFTSxxxxxxxx",
+        },
+        {
+          name: "Title",
+          label: "Title:",
+          placeholder: "Summarize the project in 10 words or less",
+        },
+        {
+          name: "Duration",
+          label: "Project Duration:",
+          placeholder: "Total number of working days/hours",
+        },
+        {
+          name: "CorpDiscount",
+          label: "Corporate discount (%):",
+          placeholder: "This is optional",
+        },
+        {
+          name: "Warranty",
+          label: "Warranty:",
+          placeholder: "Number of years warranty is valid",
+        },
       ],
       Option4: [
         // Statement of Account
-        { name: "To", label: "To:" },
-        { name: "Address", label: "Address:" },
-        { name: "Date", label: "Date:" },
-        { name: "InvoiceNum", label: "Invoice/s #:" },
-        { name: "Title", label: "Title:" },
-        { name: "CorpDiscount", label: "Corporate discount (%):" },
+        {
+          name: "To",
+          label: "To:",
+          placeholder:
+            "Name of Client / Company (e.g. Mr. Jones; Lubeck Shipping, LLC.; etc.)",
+        },
+        {
+          name: "Address",
+          label: "Address:",
+          placeholder: "Location of Client / Project",
+        },
+        { name: "Date", label: "Date:", placeholder: "01-October-2022" },
+        {
+          name: "InvoiceNum",
+          label: "Invoice/s #:",
+          placeholder: "Relevant invoices, separate by comma",
+        },
+        {
+          name: "Title",
+          label: "Title:",
+          placeholder: "Summarize the project in 10 words or less",
+        },
+        {
+          name: "CorpDiscount",
+          label: "Corporate discount (%):",
+          placeholder: "This is optional",
+        },
       ],
     };
 
@@ -113,8 +199,30 @@ const App = () => {
 
   //-------------------------------------------------------------------------------------------------------
   // "Generate" BUTTON
-  const handleGenerateDocument = () => {
-    console.log("Generating document:", particularsFields); // Generate document based on input fields
+
+  const generatePDF = (inputData) => {
+    const doc = new jsPDF();
+
+    // Add content to the PDF document using the input data
+
+    doc.text(`To: ${inputData.To}`, 10, 10);
+    doc.text(`Address: ${inputData.Address}`, 10, 20);
+    // ...
+
+    // Save the PDF document
+    doc.setPageSize("A4");
+    doc.save("document.pdf");
+  };
+  const handleGeneratePDF = () => {
+    // Prepare the input data for the PDF document
+    const inputData = {
+      To: inputFields[0].To,
+      Address: inputFields[1].Address,
+      // ...
+    };
+
+    // Call the generatePDF function
+    generatePDF(inputData);
   };
   //-------------------------------------------------------------------------------------------------------
 
@@ -154,7 +262,6 @@ const App = () => {
               name="description"
               value={field.description}
               placeholder="Description"
-              // onChange={(event) => handleInputChange(index, event)}
             />
             {/* <label htmlFor={`quantities${index}`}>Quantity:</label> */}
             <input
@@ -164,7 +271,6 @@ const App = () => {
               name="quantities"
               value={field.quantities}
               placeholder="Quantity"
-              // onChange={(event) => handleInputChange(index, event)}
             />
             {/* <label htmlFor={`unit_prices${index}`}>Unit Price:</label> */}
             <input
@@ -174,7 +280,6 @@ const App = () => {
               name="unit_prices"
               value={field.unit_prices}
               placeholder="Unit Price (AED)"
-              // onChange={(event) => handleInputChange(index, event)}
             />
             {/* <label htmlFor={`amounts${index}`}>Amount:</label> */}
             <input
@@ -184,7 +289,6 @@ const App = () => {
               name="amounts"
               value={field.amounts}
               placeholder="Total (AED)"
-              // onChange={(event) => handleInputChange(index, event)}
             />
             {/* <label htmlFor={`remarks${index}`}>Remarks:</label> */}
             <input
@@ -194,7 +298,6 @@ const App = () => {
               name="remarks"
               value={field.remarks}
               placeholder="Remarks"
-              // onChange={(event) => handleInputChange(index, event)}
             />
 
             <button
@@ -206,11 +309,13 @@ const App = () => {
           </div>
         ))}
       </div>
-      <button className="AddItemButton" onClick={handleAddField}>
-        Add Item
-      </button>
-      <button className="GenerateButton" onClick={handleGenerateDocument}>
-        Generate
+      <div>
+        <button className="AddItemButton" onClick={handleAddField}>
+          Add Item
+        </button>
+      </div>
+      <button className="GenerateButton" onClick={handleGeneratePDF}>
+        Generate Document
       </button>
     </div>
   );
