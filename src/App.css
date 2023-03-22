@@ -37,13 +37,17 @@ body {
   display: inline-block;
 }
 
-.descriptionField,
 .quantityField,
 .unitPriceField,
-.amountField,
+.amountField {
+  margin-left: 10px;
+  width: 100px;
+}
+
+.descriptionField,
 .remarksField {
   margin-left: 10px;
-  min-width: 200px;
+  min-width: 300px;
 }
 
 .RemoveFieldButton,

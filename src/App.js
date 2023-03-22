@@ -154,7 +154,7 @@ const App = () => {
               name="description"
               value={field.description}
               placeholder="Description"
-              onChange={(event) => handleInputChange(index, event)}
+              // onChange={(event) => handleInputChange(index, event)}
             />
             {/* <label htmlFor={`quantities${index}`}>Quantity:</label> */}
             <input
@@ -164,7 +164,7 @@ const App = () => {
               name="quantities"
               value={field.quantities}
               placeholder="Quantity"
-              onChange={(event) => handleInputChange(index, event)}
+              // onChange={(event) => handleInputChange(index, event)}
             />
             {/* <label htmlFor={`unit_prices${index}`}>Unit Price:</label> */}
             <input
@@ -174,7 +174,7 @@ const App = () => {
               name="unit_prices"
               value={field.unit_prices}
               placeholder="Unit Price (AED)"
-              onChange={(event) => handleInputChange(index, event)}
+              // onChange={(event) => handleInputChange(index, event)}
             />
             {/* <label htmlFor={`amounts${index}`}>Amount:</label> */}
             <input
@@ -183,8 +183,8 @@ const App = () => {
               className="amountField"
               name="amounts"
               value={field.amounts}
-              placeholder="Amount"
-              onChange={(event) => handleInputChange(index, event)}
+              placeholder="Total (AED)"
+              // onChange={(event) => handleInputChange(index, event)}
             />
             {/* <label htmlFor={`remarks${index}`}>Remarks:</label> */}
             <input
@@ -194,7 +194,7 @@ const App = () => {
               name="remarks"
               value={field.remarks}
               placeholder="Remarks"
-              onChange={(event) => handleInputChange(index, event)}
+              // onChange={(event) => handleInputChange(index, event)}
             />
 
             <button
