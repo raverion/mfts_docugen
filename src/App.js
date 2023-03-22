@@ -138,61 +138,80 @@ const App = () => {
       </select>
 
       <div>{renderInputFields()}</div>
+
       <div className="separator"></div>
       <div className="particulars_label">Particulars:</div>
       <div className="separator"></div>
+
       <div>
         {particularsFields.map((field, index) => (
           <div key={index}>
-            <label htmlFor={`description${index}`}>Description:</label>
+            {/* <label htmlFor={`description${index}`}>Description:</label> */}
             <input
               type="text"
               id={`description${index}`}
+              className="descriptionField"
               name="description"
               value={field.description}
+              placeholder="Description"
               onChange={(event) => handleInputChange(index, event)}
             />
-            <label htmlFor={`quantities${index}`}>Quantity:</label>
+            {/* <label htmlFor={`quantities${index}`}>Quantity:</label> */}
             <input
               type="text"
               id={`quantities${index}`}
+              className="quantityField"
               name="quantities"
               value={field.quantities}
+              placeholder="Quantity"
               onChange={(event) => handleInputChange(index, event)}
             />
-            <label htmlFor={`unit_prices${index}`}>Unit Price:</label>
+            {/* <label htmlFor={`unit_prices${index}`}>Unit Price:</label> */}
             <input
               type="text"
               id={`unit_prices${index}`}
+              className="unitPriceField"
               name="unit_prices"
               value={field.unit_prices}
+              placeholder="Unit Price (AED)"
               onChange={(event) => handleInputChange(index, event)}
             />
-            <label htmlFor={`amounts${index}`}>Amount:</label>
+            {/* <label htmlFor={`amounts${index}`}>Amount:</label> */}
             <input
               type="text"
               id={`amounts${index}`}
+              className="amountField"
               name="amounts"
               value={field.amounts}
+              placeholder="Amount"
               onChange={(event) => handleInputChange(index, event)}
             />
-            <label htmlFor={`remarks${index}`}>Remarks:</label>
+            {/* <label htmlFor={`remarks${index}`}>Remarks:</label> */}
             <input
               type="text"
               id={`remarks${index}`}
+              className="remarksField"
               name="remarks"
               value={field.remarks}
+              placeholder="Remarks"
               onChange={(event) => handleInputChange(index, event)}
             />
 
-            <button onClick={() => handleRemoveField(index)}>
+            <button
+              className="RemoveFieldButton"
+              onClick={() => handleRemoveField(index)}
+            >
               Remove Field
             </button>
           </div>
         ))}
       </div>
-      <button onClick={handleAddField}>Add Item</button>
-      <button onClick={handleGenerateDocument}>Generate</button>
+      <button className="AddItemButton" onClick={handleAddField}>
+        Add Item
+      </button>
+      <button className="GenerateButton" onClick={handleGenerateDocument}>
+        Generate
+      </button>
     </div>
   );
 };

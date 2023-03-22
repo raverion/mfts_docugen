@@ -37,6 +37,22 @@ body {
   display: inline-block;
 }
 
+.descriptionField,
+.quantityField,
+.unitPriceField,
+.amountField,
+.remarksField {
+  margin-left: 10px;
+  min-width: 200px;
+}
+
+.RemoveFieldButton,
+.AddItemButton,
+.GenerateButton {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
 /* .App {
   text-align: center;
 }
