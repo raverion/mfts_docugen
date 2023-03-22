@@ -211,13 +211,14 @@ const App = () => {
 
     // Save the PDF document
     doc.setPageSize("A4");
-    doc.save("document.pdf");
+    doc.save("document1.pdf");
   };
   const handleGeneratePDF = () => {
     // Prepare the input data for the PDF document
     const inputData = {
       To: inputFields[0].To,
       Address: inputFields[1].Address,
+
       // ...
     };
 
