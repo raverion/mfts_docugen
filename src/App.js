@@ -56,7 +56,7 @@ const App = () => {
   const getOptionFields = (option) => {
     // Define the input fields for each option
     const options = {
-      Option1: [
+      ACKRECEIPT: [
         // Acknowledgement Receipt
         {
           name: "To",
@@ -70,7 +70,7 @@ const App = () => {
           placeholder: "Location of Client / Project",
         },
         { name: "Date", label: "Date:", placeholder: "01-October-2022" },
-        { name: "InvoiceNum", label: "Invoice #:", placeholder: "INVxxxx" },
+        { name: "DocNum", label: "Invoice #:", placeholder: "INVxxxx" },
         {
           name: "Title",
           label: "Title:",
@@ -82,7 +82,7 @@ const App = () => {
           placeholder: "This is optional",
         },
       ],
-      Option2: [
+      INV: [
         // Invoice
         {
           name: "To",
@@ -96,7 +96,7 @@ const App = () => {
           placeholder: "Location of Client / Project",
         },
         { name: "Date", label: "Date:", placeholder: "01-October-2022" },
-        { name: "InvoiceNum", label: "Invoice #:", placeholder: "INVxxxx" },
+        { name: "DocNum", label: "Invoice #:", placeholder: "INVxxxx" },
         {
           name: "Title",
           label: "Title:",
@@ -108,7 +108,7 @@ const App = () => {
           placeholder: "This is optional",
         },
       ],
-      Option3: [
+      QUOTE: [
         // Quotation
         {
           name: "To",
@@ -123,7 +123,7 @@ const App = () => {
         },
         { name: "Date", label: "Date:", placeholder: "01-October-2022" },
         {
-          name: "QuoteNum",
+          name: "DocNum",
           label: "Quotation #:",
           placeholder: "MFTSxxxxxxxx",
         },
@@ -148,7 +148,7 @@ const App = () => {
           placeholder: "Number of years warranty is valid",
         },
       ],
-      Option4: [
+      SOA: [
         // Statement of Account
         {
           name: "To",
@@ -163,7 +163,7 @@ const App = () => {
         },
         { name: "Date", label: "Date:", placeholder: "01-October-2022" },
         {
-          name: "InvoiceNum",
+          name: "DocNum",
           label: "Invoice/s #:",
           placeholder: "Relevant invoices, separate by comma",
         },
@@ -206,18 +206,23 @@ const App = () => {
     // Add content to the PDF document using the input data
 
     doc.text(`To: ${inputData.To}`, 10, 10);
-    doc.text(`Address: ${inputData.Address}`, 10, 20);
+    doc.text(`Address: ${inputData.Address}`, 10, 17);
+    doc.text(`Date: ${inputData.Date}`, 100, 10);
+    doc.text(`Quotation/Invoice#: ${inputData.DocNum}`, 100, 17);
     // ...
 
     // Save the PDF document
-    doc.setPageSize("A4");
-    doc.save("document1.pdf");
+    doc.save(
+      `${selectedOption} - ${inputData.DocNum} - ${inputData.Date} - ${inputData.To}.pdf`
+    );
   };
   const handleGeneratePDF = () => {
     // Prepare the input data for the PDF document
     const inputData = {
       To: inputFields[0].To,
       Address: inputFields[1].Address,
+      Date: inputFields[2].Date,
+      DocNum: inputFields[3].DocNum,
 
       // ...
     };
@@ -240,10 +245,10 @@ const App = () => {
         onChange={handleOptionChange}
       >
         <option value="">--Please select an option--</option>
-        <option value="Option1">Acknowledgement Receipt</option>
-        <option value="Option2">Invoice</option>
-        <option value="Option3">Quotation</option>
-        <option value="Option4">Statement of Account</option>
+        <option value="ACKRECEIPT">Acknowledgement Receipt</option>
+        <option value="INV">Invoice</option>
+        <option value="QUOTE">Quotation</option>
+        <option value="SOA">Statement of Account</option>
       </select>
 
       <div>{renderInputFields()}</div>
