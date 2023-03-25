@@ -3,6 +3,7 @@ import "./App.css";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import jsPDF from "jspdf";
+// import { handleGeneratePDF } from "./generateDoc";
 
 const App = () => {
   useEffect(() => {
@@ -213,7 +214,6 @@ const App = () => {
 
   //-------------------------------------------------------------------------------------------------------
   // "Generate" BUTTON
-
   const generatePDF = (inputData) => {
     const doc = new jsPDF();
 
@@ -258,6 +258,7 @@ const App = () => {
       `${selectedOption} - ${inputData.DocNum} - ${inputData.Date} - ${inputData.To}.pdf`
     );
   };
+
   const handleGeneratePDF = () => {
     // Prepare the input data for the PDF document
     const inputData = {
@@ -272,6 +273,7 @@ const App = () => {
     // Call the generatePDF function
     generatePDF(inputData);
   };
+
   //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
@@ -363,7 +365,11 @@ const App = () => {
           Add Item
         </button>
       </div>
-      <button className="GenerateButton" onClick={handleGeneratePDF}>
+      <button
+        className="GenerateButton"
+        // onClick={handleGeneratePDF(inputFields, selectedOption)}
+        onClick={handleGeneratePDF}
+      >
         Generate pdf
       </button>
       <button className="GenerateButton">Generate xlsx</button>
@@ -372,25 +378,3 @@ const App = () => {
 };
 
 export default App;
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-// export default App;
