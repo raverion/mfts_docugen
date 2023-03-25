@@ -347,8 +347,9 @@ const App = () => {
         </button>
       </div>
       <button className="GenerateButton" onClick={handleGeneratePDF}>
-        Generate Document
+        Generate pdf
       </button>
+      <button className="GenerateButton">Generate xlsx</button>
     </div>
   );
 };
