@@ -178,6 +178,20 @@ const App = () => {
           placeholder: "This is optional",
         },
       ],
+      PAYROLL: [
+        // Payroll
+        { name: "Date", label: "Date:", placeholder: "01-October-2022" },
+        {
+          name: "DocNum",
+          label: "Payroll #:",
+          placeholder: "",
+        },
+        {
+          name: "Title",
+          label: "Title:",
+          placeholder: "Summarize the project in 10 words or less",
+        },
+      ],
     };
 
     return options[option] || [];
@@ -234,6 +248,8 @@ const App = () => {
       doc.text(`QUOTATION`, 90, 75);
     } else if (selectedOption === "SOA") {
       doc.text(`STATEMENT OF ACCOUNT`, 70, 75);
+    } else if (selectedOption === "PAYROLL") {
+      doc.text(`PAYROLL`, 70, 75);
     }
     // ...
 
@@ -275,6 +291,7 @@ const App = () => {
         <option value="INV">Invoice</option>
         <option value="QUOTE">Quotation</option>
         <option value="SOA">Statement of Account</option>
+        <option value="PAYROLL">Payroll</option>
       </select>
 
       <div>{renderInputFields()}</div>
@@ -293,7 +310,7 @@ const App = () => {
               className="descriptionField"
               name="description"
               value={field.description}
-              placeholder="Description"
+              placeholder="Description / Name"
             />
             {/* <label htmlFor={`quantities${index}`}>Quantity:</label> */}
             <input
@@ -311,7 +328,7 @@ const App = () => {
               className="unitPriceField"
               name="unit_prices"
               value={field.unit_prices}
-              placeholder="Unit Price (AED)"
+              placeholder="Rate (AED)"
             />
             {/* <label htmlFor={`amounts${index}`}>Amount:</label> */}
             <input
@@ -329,7 +346,7 @@ const App = () => {
               className="remarksField"
               name="remarks"
               value={field.remarks}
-              placeholder="Remarks"
+              placeholder="Remarks / Signature"
             />
 
             <button
