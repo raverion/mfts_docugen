@@ -1,6 +1,6 @@
 import jsPDF from "jspdf";
 
-export const generatePDF = (inputData, selectedOption) => {
+export const generatePDF = (selectedOption, inputData) => {
   const doc = new jsPDF();
 
   // Load the image file
@@ -43,19 +43,4 @@ export const generatePDF = (inputData, selectedOption) => {
   doc.save(
     `${selectedOption} - ${inputData.DocNum} - ${inputData.Date} - ${inputData.To}.pdf`
   );
-};
-
-export const handleGeneratePDF = (inputFields, selectedOption) => {
-  // Prepare the input data for the PDF document
-  const inputData = {
-    To: inputFields[0].To,
-    Address: inputFields[1].Address,
-    Date: inputFields[2].Date,
-    DocNum: inputFields[3].DocNum,
-
-    // ...
-  };
-
-  // Call the generatePDF function
-  generatePDF(inputData, selectedOption);
 };

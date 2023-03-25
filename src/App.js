@@ -2,8 +2,8 @@
 import "./App.css";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import jsPDF from "jspdf";
-// import { handleGeneratePDF } from "./generateDoc";
+// import jsPDF from "jspdf";
+import { generatePDF } from "./generateDoc";
 
 const App = () => {
   useEffect(() => {
@@ -213,52 +213,6 @@ const App = () => {
   //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
-  // "Generate" BUTTON
-  const generatePDF = (inputData) => {
-    const doc = new jsPDF();
-
-    // Load the image file
-    const imgData = require("./MFTS_logo.png");
-    // Add the image to the PDF document
-    doc.addImage(
-      imgData,
-      "PNG",
-      50, // X coordinate of the image
-      10, // Y coordinate of the image
-      96, // Width of the image
-      30 // Height of the image
-    );
-
-    // Set the font and font size
-    doc.setFont("helvetica");
-    doc.setFontSize(11);
-
-    // Add content to the PDF document using the input data
-    doc.text(`To: ${inputData.To}`, 10, 55);
-    doc.text(`Address: ${inputData.Address}`, 10, 60);
-    doc.text(`Date: ${inputData.Date}`, 150, 55);
-    doc.text(`Quote/Invoice#: ${inputData.DocNum}`, 150, 60);
-
-    doc.setFontSize(14);
-    if (selectedOption === "ACKRECEIPT") {
-      doc.text(`ACKNOWLEDGEMENT RECEIPT`, 70, 75);
-    } else if (selectedOption === "INV") {
-      doc.text(`INVOICE`, 95, 75);
-    } else if (selectedOption === "QUOTE") {
-      doc.text(`QUOTATION`, 90, 75);
-    } else if (selectedOption === "SOA") {
-      doc.text(`STATEMENT OF ACCOUNT`, 70, 75);
-    } else if (selectedOption === "PAYROLL") {
-      doc.text(`PAYROLL`, 70, 75);
-    }
-    // ...
-
-    // Save the PDF document
-    doc.save(
-      `${selectedOption} - ${inputData.DocNum} - ${inputData.Date} - ${inputData.To}.pdf`
-    );
-  };
-
   const handleGeneratePDF = () => {
     // Prepare the input data for the PDF document
     const inputData = {
@@ -271,9 +225,8 @@ const App = () => {
     };
 
     // Call the generatePDF function
-    generatePDF(inputData);
+    generatePDF(selectedOption, inputData);
   };
-
   //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
@@ -365,11 +318,7 @@ const App = () => {
           Add Item
         </button>
       </div>
-      <button
-        className="GenerateButton"
-        // onClick={handleGeneratePDF(inputFields, selectedOption)}
-        onClick={handleGeneratePDF}
-      >
+      <button className="GenerateButton" onClick={handleGeneratePDF}>
         Generate pdf
       </button>
       <button className="GenerateButton">Generate xlsx</button>
