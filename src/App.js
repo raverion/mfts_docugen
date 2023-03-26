@@ -201,9 +201,28 @@ const App = () => {
 
   //-------------------------------------------------------------------------------------------------------
   // TABLE FIELDS
-  const [particularsFields, setFields] = useState([{ label: "", value: "" }]);
+  const [particularsFields, setFields] = useState([
+    {
+      description: "",
+      quantity: "",
+      unit: "",
+      rate: "",
+      total: "",
+      remarks: "",
+    },
+  ]);
   const handleAddField = () => {
-    setFields([...particularsFields, { label: "", value: "" }]);
+    setFields([
+      ...particularsFields,
+      {
+        description: "",
+        quantity: "",
+        unit: "",
+        rate: "",
+        total: "",
+        remarks: "",
+      },
+    ]);
   };
   const handleRemoveField = (index) => {
     const values = [...particularsFields];
@@ -230,10 +249,10 @@ const App = () => {
               <td>
                 <input
                   type="text"
-                  value={field.label}
+                  value={field.description}
                   onChange={(e) => {
                     const values = [...particularsFields];
-                    values[index].label = e.target.value;
+                    values[index].description = e.target.value;
                     setFields(values);
                   }}
                   placeholder="Description"
@@ -243,10 +262,10 @@ const App = () => {
               <td>
                 <input
                   type="number"
-                  value={field.value}
+                  value={field.quantity}
                   onChange={(e) => {
                     const values = [...particularsFields];
-                    values[index].value = e.target.value;
+                    values[index].quantity = e.target.value;
                     setFields(values);
                   }}
                   placeholder="Quantity"
@@ -256,10 +275,10 @@ const App = () => {
               <td>
                 <input
                   type="text"
-                  value={field.value}
+                  value={field.unit}
                   onChange={(e) => {
                     const values = [...particularsFields];
-                    values[index].value = e.target.value;
+                    values[index].unit = e.target.value;
                     setFields(values);
                   }}
                   placeholder="e.g. pcs, boxes"
@@ -269,10 +288,10 @@ const App = () => {
               <td>
                 <input
                   type="number"
-                  value={field.value}
+                  value={field.rate}
                   onChange={(e) => {
                     const values = [...particularsFields];
-                    values[index].value = e.target.value;
+                    values[index].rate = e.target.value;
                     setFields(values);
                   }}
                   placeholder="AED"
@@ -282,10 +301,10 @@ const App = () => {
               <td>
                 <input
                   type="number"
-                  value={field.value}
+                  value={field.total}
                   onChange={(e) => {
                     const values = [...particularsFields];
-                    values[index].value = e.target.value;
+                    values[index].total = e.target.value;
                     setFields(values);
                   }}
                   placeholder="AED"
@@ -295,10 +314,10 @@ const App = () => {
               <td>
                 <input
                   type="text"
-                  value={field.value}
+                  value={field.remarks}
                   onChange={(e) => {
                     const values = [...particularsFields];
-                    values[index].value = e.target.value;
+                    values[index].remarks = e.target.value;
                     setFields(values);
                   }}
                   placeholder="Comments"
@@ -327,12 +346,12 @@ const App = () => {
     };
 
     const tableData = particularsFields.map((field) => ({
-      description: field.label,
-      quantity: field.value,
-      unit: "",
-      rate: "",
-      total: "",
-      remarks: "",
+      description: field.description,
+      quantity: field.quantity,
+      unit: field.unit,
+      rate: field.rate,
+      total: field.total,
+      remarks: field.remarks,
     }));
 
     // Call the generatePDF function
