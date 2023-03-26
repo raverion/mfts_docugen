@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
+import "jspdf-autotable";
 
-export const generatePDF = (selectedOption, inputData) => {
+export const generatePDF = (selectedOption, inputData, tableData) => {
   const doc = new jsPDF();
 
   // Load the image file
@@ -38,6 +39,18 @@ export const generatePDF = (selectedOption, inputData) => {
     doc.text(`PAYROLL`, 70, 75);
   }
   // ...
+
+  let startY = 90;
+  doc.autoTable({
+    startY,
+    head: [["Description", "Quantity", "Unit", "Rate", "Total", "Remarks"]],
+    body: tableData.map((row) => {
+      const { description, quantity, unit, rate, remarks } = row;
+      const total = quantity * rate;
+      return [description, quantity, unit, rate, total, remarks];
+    }),
+    theme: "striped",
+  });
 
   // Save the PDF document
   doc.save(

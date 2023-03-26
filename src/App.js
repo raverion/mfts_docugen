@@ -324,13 +324,16 @@ const App = () => {
       Address: inputFields[1].Address,
       Date: inputFields[2].Date,
       DocNum: inputFields[3].DocNum,
-
-      // ...
     };
 
-    const tableData = {
-      Description: particularsFields,
-    };
+    const tableData = particularsFields.map((field) => ({
+      description: field.label,
+      quantity: field.value,
+      unit: "",
+      rate: "",
+      total: "",
+      remarks: "",
+    }));
 
     // Call the generatePDF function
     generatePDF(selectedOption, inputData, tableData);
