@@ -39,6 +39,8 @@ const App = () => {
     return optionFields.map((field, index) => {
       const { name, label, placeholder } = field;
 
+      // alert(`OptionFields0=>${name}`);
+
       return (
         <div key={index}>
           <label className="labels">{label}</label>
@@ -204,11 +206,80 @@ const App = () => {
   const [particularsFields, setFields] = useState([{ label: "", value: "" }]);
   const handleAddField = () => {
     setFields([...particularsFields, { label: "", value: "" }]);
+    // alert(particularsFields.length);
   };
   const handleRemoveField = (index) => {
     const values = [...particularsFields];
     values.splice(index, 1);
     setFields(values);
+  };
+
+  const renderTableFields = () => {
+    const columns = [
+      { name: "description", placeholder: "Description / Name" },
+      { name: "quantity", placeholder: "Quantity" },
+      { name: "rate", placeholder: "Rate (AED)" },
+      { name: "total", placeholder: "Total (AED)" },
+      { name: "remarks", placeholder: "Remarks / Signature" },
+    ];
+
+    return columns.map((field, index) => {
+      const { name, placeholder } = field;
+
+      return (
+        <div>
+          <div key={index}>
+            <input
+              type="text"
+              // id={`description${index}`}
+              className="descriptionField"
+              name={name}
+              // value={field.description}
+              placeholder={placeholder}
+            />
+            <input
+              type="text"
+              // id={`quantities${index}`}
+              className="quantityField"
+              name={name}
+              // value={field.quantities}
+              placeholder="Quantity"
+            />
+            <input
+              type="text"
+              // id={`unit_prices${index}`}
+              className="unitPriceField"
+              name="unit_prices"
+              // value={field.unit_prices}
+              placeholder="Rate (AED)"
+            />
+            <input
+              type="text"
+              // id={`amounts${index}`}
+              className="amountField"
+              name="amounts"
+              // value={field.amounts}
+              placeholder="Total (AED)"
+            />
+            <input
+              type="text"
+              // id={`remarks${index}`}
+              className="remarksField"
+              name="remarks"
+              // value={field.remarks}
+              placeholder="Remarks / Signature"
+            />
+
+            <button
+              className="RemoveFieldButton"
+              onClick={() => handleRemoveField(index)}
+            >
+              Remove Field
+            </button>
+          </div>
+        </div>
+      );
+    });
   };
   //-------------------------------------------------------------------------------------------------------
 
@@ -224,8 +295,12 @@ const App = () => {
       // ...
     };
 
+    const tableData = {
+      Description: particularsFields,
+    };
+
     // Call the generatePDF function
-    generatePDF(selectedOption, inputData);
+    generatePDF(selectedOption, inputData, tableData);
   };
   //-------------------------------------------------------------------------------------------------------
 
@@ -261,46 +336,46 @@ const App = () => {
             {/* <label htmlFor={`description${index}`}>Description:</label> */}
             <input
               type="text"
-              id={`description${index}`}
+              // id={`description${index}`}
               className="descriptionField"
               name="description"
-              value={field.description}
+              // value={field.description}
               placeholder="Description / Name"
             />
             {/* <label htmlFor={`quantities${index}`}>Quantity:</label> */}
             <input
               type="text"
-              id={`quantities${index}`}
+              // id={`quantities${index}`}
               className="quantityField"
-              name="quantities"
-              value={field.quantities}
+              name="quantity"
+              // value={field.quantities}
               placeholder="Quantity"
             />
             {/* <label htmlFor={`unit_prices${index}`}>Unit Price:</label> */}
             <input
               type="text"
-              id={`unit_prices${index}`}
+              // id={`unit_prices${index}`}
               className="unitPriceField"
               name="unit_prices"
-              value={field.unit_prices}
+              // value={field.unit_prices}
               placeholder="Rate (AED)"
             />
             {/* <label htmlFor={`amounts${index}`}>Amount:</label> */}
             <input
               type="text"
-              id={`amounts${index}`}
+              // id={`amounts${index}`}
               className="amountField"
               name="amounts"
-              value={field.amounts}
+              // value={field.amounts}
               placeholder="Total (AED)"
             />
             {/* <label htmlFor={`remarks${index}`}>Remarks:</label> */}
             <input
               type="text"
-              id={`remarks${index}`}
+              // id={`remarks${index}`}
               className="remarksField"
               name="remarks"
-              value={field.remarks}
+              // value={field.remarks}
               placeholder="Remarks / Signature"
             />
 
