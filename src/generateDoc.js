@@ -10,7 +10,7 @@ export const generatePDF = (selectedOption, inputData, tableData) => {
   doc.addImage(
     imgData,
     "PNG",
-    50, // X coordinate of the image
+    55, // X coordinate of the image
     10, // Y coordinate of the image
     96, // Width of the image
     30 // Height of the image
@@ -38,9 +38,17 @@ export const generatePDF = (selectedOption, inputData, tableData) => {
   } else if (selectedOption === "PAYROLL") {
     doc.text(`PAYROLL`, 70, 75);
   }
+
+  // Set the text to center align
+  const textWidth = doc.getTextWidth(inputData.Title);
+  const pageWidth = doc.internal.pageSize.width;
+  const centerX = (pageWidth - textWidth) / 2;
+
+  // Add the centered text to the PDF document
+  doc.text(`${inputData.Title}`, centerX, 85);
   // ...
 
-  let startY = 90;
+  let startY = 100;
   doc.autoTable({
     startY,
     head: [["Description", "Quantity", "Unit", "Rate", "Total", "Remarks"]],
