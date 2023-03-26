@@ -1,8 +1,6 @@
-// import logo from "./logo.svg";
 import "./App.css";
 import React, { useState } from "react";
 import { useEffect } from "react";
-// import jsPDF from "jspdf";
 import { generatePDF } from "./generateDoc";
 
 const App = () => {
@@ -206,7 +204,6 @@ const App = () => {
   const [particularsFields, setFields] = useState([{ label: "", value: "" }]);
   const handleAddField = () => {
     setFields([...particularsFields, { label: "", value: "" }]);
-    // alert(particularsFields.length);
   };
   const handleRemoveField = (index) => {
     const values = [...particularsFields];
@@ -215,71 +212,107 @@ const App = () => {
   };
 
   const renderTableFields = () => {
-    const columns = [
-      { name: "description", placeholder: "Description / Name" },
-      { name: "quantity", placeholder: "Quantity" },
-      { name: "rate", placeholder: "Rate (AED)" },
-      { name: "total", placeholder: "Total (AED)" },
-      { name: "remarks", placeholder: "Remarks / Signature" },
-    ];
-
-    return columns.map((field, index) => {
-      const { name, placeholder } = field;
-
-      return (
-        <div>
-          <div key={index}>
-            <input
-              type="text"
-              // id={`description${index}`}
-              className="descriptionField"
-              name={name}
-              // value={field.description}
-              placeholder={placeholder}
-            />
-            <input
-              type="text"
-              // id={`quantities${index}`}
-              className="quantityField"
-              name={name}
-              // value={field.quantities}
-              placeholder="Quantity"
-            />
-            <input
-              type="text"
-              // id={`unit_prices${index}`}
-              className="unitPriceField"
-              name="unit_prices"
-              // value={field.unit_prices}
-              placeholder="Rate (AED)"
-            />
-            <input
-              type="text"
-              // id={`amounts${index}`}
-              className="amountField"
-              name="amounts"
-              // value={field.amounts}
-              placeholder="Total (AED)"
-            />
-            <input
-              type="text"
-              // id={`remarks${index}`}
-              className="remarksField"
-              name="remarks"
-              // value={field.remarks}
-              placeholder="Remarks / Signature"
-            />
-
-            <button
-              className="RemoveFieldButton"
-              onClick={() => handleRemoveField(index)}
-            >
-              Remove Field
-            </button>
-          </div>
-        </div>
-      );
-    });
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Rate</th>
+            <th>Total</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {particularsFields.map((field, index) => (
+            <tr key={index}>
+              <td>
+                <input
+                  type="text"
+                  value={field.label}
+                  onChange={(e) => {
+                    const values = [...particularsFields];
+                    values[index].label = e.target.value;
+                    setFields(values);
+                  }}
+                  placeholder="Description"
+                  className="descriptionField"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={field.value}
+                  onChange={(e) => {
+                    const values = [...particularsFields];
+                    values[index].value = e.target.value;
+                    setFields(values);
+                  }}
+                  placeholder="Quantity"
+                  className="quantityField"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={field.value}
+                  onChange={(e) => {
+                    const values = [...particularsFields];
+                    values[index].value = e.target.value;
+                    setFields(values);
+                  }}
+                  placeholder="e.g. pcs, boxes"
+                  className="unitField"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={field.value}
+                  onChange={(e) => {
+                    const values = [...particularsFields];
+                    values[index].value = e.target.value;
+                    setFields(values);
+                  }}
+                  placeholder="AED"
+                  className="rateField"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={field.value}
+                  onChange={(e) => {
+                    const values = [...particularsFields];
+                    values[index].value = e.target.value;
+                    setFields(values);
+                  }}
+                  placeholder="AED"
+                  className="totalField"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={field.value}
+                  onChange={(e) => {
+                    const values = [...particularsFields];
+                    values[index].value = e.target.value;
+                    setFields(values);
+                  }}
+                  placeholder="Comments"
+                  className="remarksField"
+                />
+              </td>
+              <td>
+                <button onClick={() => handleRemoveField(index)}>Remove</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
   };
   //-------------------------------------------------------------------------------------------------------
 
@@ -330,64 +363,7 @@ const App = () => {
       <div className="particulars_label">Particulars:</div>
       <div className="separator"></div>
 
-      <div>
-        {particularsFields.map((field, index) => (
-          <div key={index}>
-            {/* <label htmlFor={`description${index}`}>Description:</label> */}
-            <input
-              type="text"
-              // id={`description${index}`}
-              className="descriptionField"
-              name="description"
-              // value={field.description}
-              placeholder="Description / Name"
-            />
-            {/* <label htmlFor={`quantities${index}`}>Quantity:</label> */}
-            <input
-              type="text"
-              // id={`quantities${index}`}
-              className="quantityField"
-              name="quantity"
-              // value={field.quantities}
-              placeholder="Quantity"
-            />
-            {/* <label htmlFor={`unit_prices${index}`}>Unit Price:</label> */}
-            <input
-              type="text"
-              // id={`unit_prices${index}`}
-              className="unitPriceField"
-              name="unit_prices"
-              // value={field.unit_prices}
-              placeholder="Rate (AED)"
-            />
-            {/* <label htmlFor={`amounts${index}`}>Amount:</label> */}
-            <input
-              type="text"
-              // id={`amounts${index}`}
-              className="amountField"
-              name="amounts"
-              // value={field.amounts}
-              placeholder="Total (AED)"
-            />
-            {/* <label htmlFor={`remarks${index}`}>Remarks:</label> */}
-            <input
-              type="text"
-              // id={`remarks${index}`}
-              className="remarksField"
-              name="remarks"
-              // value={field.remarks}
-              placeholder="Remarks / Signature"
-            />
-
-            <button
-              className="RemoveFieldButton"
-              onClick={() => handleRemoveField(index)}
-            >
-              Remove Field
-            </button>
-          </div>
-        ))}
-      </div>
+      <div>{renderTableFields()}</div>
       <div>
         <button className="AddItemButton" onClick={handleAddField}>
           Add Item

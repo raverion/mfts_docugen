@@ -39,8 +39,8 @@ body {
 }
 
 .quantityField,
-.unitPriceField,
-.amountField {
+.rateField,
+.totalField {
   margin-left: 10px;
   width: 100px;
 }
@@ -49,6 +49,12 @@ body {
   margin-left: 20px;
   min-width: 500px;
 }
+
+.unitField {
+  margin-left: 10px;
+  width: 50px;
+}
+
 .remarksField {
   margin-left: 10px;
   min-width: 300px;
