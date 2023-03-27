@@ -148,6 +148,11 @@ const App = () => {
           label: "Warranty:",
           placeholder: "Number of years warranty is valid",
         },
+        {
+          name: "Downpayment",
+          label: "Downpayment (%):",
+          placeholder: "Initial payment from client to begin work",
+        },
       ],
       SOA: [
         // Statement of Account
