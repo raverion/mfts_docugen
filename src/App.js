@@ -349,6 +349,7 @@ const App = () => {
       Date: inputFields[2].Date,
       DocNum: inputFields[3].DocNum,
       Title: inputFields[4].Title,
+      Downpayment: inputFields[8].Downpayment,
     };
 
     const tableData = particularsFields.map((field) => ({

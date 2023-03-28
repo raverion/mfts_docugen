@@ -60,6 +60,12 @@ export const generatePDF = (selectedOption, inputData, tableData) => {
     theme: "striped",
   });
 
+  doc.setFontSize(11);
+  if (selectedOption === "QUOTE") {
+    doc.text(`Terms and Agreemant`, 10, 175);
+    doc.text(`1. ${inputData.Downpayment}% downpayment`, 10, 185);
+  }
+
   // Save the PDF document
   doc.save(
     `${selectedOption} - ${inputData.DocNum} - ${inputData.Date} - ${inputData.To}.pdf`
