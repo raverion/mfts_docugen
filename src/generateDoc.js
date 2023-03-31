@@ -20,11 +20,13 @@ export const generatePDF = (selectedOption, inputData, tableData) => {
   doc.setFont("helvetica");
   doc.setFontSize(11);
 
-  // Add content to the PDF document using the input data
-  doc.text(`To: ${inputData.To}`, 10, 55);
-  doc.text(`Address: ${inputData.Address}`, 10, 60);
-  doc.text(`Date: ${inputData.Date}`, 150, 55);
-  doc.text(`Quote/Invoice#: ${inputData.DocNum}`, 150, 60);
+  if (selectedOption !== "PAYROLL") {
+    // Add content to the PDF document using the input data
+    doc.text(`To: ${inputData.input_0}`, 10, 55); // To
+    doc.text(`Address: ${inputData.input_1}`, 10, 60); // Address
+    doc.text(`Date: ${inputData.input_2}`, 150, 55); // Date
+    doc.text(`Quote/Invoice#: ${inputData.input_3}`, 150, 60); // DocNum
+  }
 
   doc.setFontSize(14);
   if (selectedOption === "ACKRECEIPT") {
@@ -36,26 +38,35 @@ export const generatePDF = (selectedOption, inputData, tableData) => {
   } else if (selectedOption === "SOA") {
     doc.text(`STATEMENT OF ACCOUNT`, 70, 75);
   } else if (selectedOption === "PAYROLL") {
-    doc.text(`PAYROLL`, 70, 75);
+    doc.text(`PAYROLL`, 95, 60);
   }
 
   // Set the text to center align
-  const textWidth = doc.getTextWidth(inputData.Title);
-  const pageWidth = doc.internal.pageSize.width;
-  const centerX = (pageWidth - textWidth) / 2;
+  let textWidth = 0;
+  let startY = 0; // for table
+  if (selectedOption !== "PAYROLL") {
+    textWidth = doc.getTextWidth(inputData.input_4);
+    const pageWidth = doc.internal.pageSize.width;
+    const centerX = (pageWidth - textWidth) / 2;
+    doc.text(`${inputData.input_4}`, centerX, 85); // Add the centered text to the PDF document
+    startY = 100;
+  } else {
+    textWidth = doc.getTextWidth(inputData.input_2); // for PAYROLL, title is index #2
+    const pageWidth = doc.internal.pageSize.width;
+    const centerX = (pageWidth - textWidth) / 2;
+    doc.text(`${inputData.input_2}`, centerX, 70); // Add the centered text to the PDF document
+    startY = 80;
+  }
 
-  // Add the centered text to the PDF document
-  doc.text(`${inputData.Title}`, centerX, 85);
-  // ...
-
-  let startY = 100;
+  // const totalSum = tableData.reduce((acc, row) => acc + row[4], 0);
+  // const totalRow = ["", "", "", "", totalSum, ""];
   doc.autoTable({
     startY,
     head: [["Description", "Quantity", "Unit", "Rate", "Total", "Remarks"]],
+    // body: [...tableData, totalRow],
     body: tableData.map((row) => {
       const { description, quantity, unit, rate, remarks } = row;
-      const total = quantity * rate;
-      return [description, quantity, unit, rate, total, remarks];
+      return [description, quantity, unit, rate, quantity * rate, remarks];
     }),
     theme: "striped",
   });

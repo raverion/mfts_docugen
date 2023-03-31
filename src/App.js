@@ -343,14 +343,23 @@ const App = () => {
   //-------------------------------------------------------------------------------------------------------
   const handleGeneratePDF = () => {
     // Prepare the input data for the PDF document
-    const inputData = {
-      To: inputFields[0].To,
-      Address: inputFields[1].Address,
-      Date: inputFields[2].Date,
-      DocNum: inputFields[3].DocNum,
-      Title: inputFields[4].Title,
-      Downpayment: inputFields[8].Downpayment,
-    };
+    let inputData = {};
+    if (selectedOption !== "PAYROLL") {
+      inputData = {
+        input_0: inputFields[0].To,
+        input_1: inputFields[1].Address,
+        input_2: inputFields[2].Date,
+        input_3: inputFields[3].DocNum,
+        input_4: inputFields[4].Title,
+        input_8: inputFields[8].Downpayment,
+      };
+    } else {
+      inputData = {
+        input_0: inputFields[0].Date,
+        input_1: inputFields[1].DocNum,
+        input_2: inputFields[2].Title,
+      };
+    }
 
     const tableData = particularsFields.map((field) => ({
       description: field.description,
