@@ -60,25 +60,25 @@ const App = () => {
       ACKRECEIPT: [
         // Acknowledgement Receipt
         {
-          name: "To",
+          name: "input_0",
           label: "To:",
           placeholder:
             "Name of Client / Company (e.g. Mr. Jones; Lubeck Shipping, LLC.; etc.)",
         },
         {
-          name: "Address",
+          name: "input_1",
           label: "Address:",
           placeholder: "Location of Client / Project",
         },
-        { name: "Date", label: "Date:", placeholder: "01-October-2022" },
-        { name: "DocNum", label: "Invoice #:", placeholder: "INVxxxx" },
+        { name: "input_2", label: "Date:", placeholder: "01-October-2022" },
+        { name: "input_3", label: "Invoice #:", placeholder: "INVxxxx" },
         {
-          name: "Title",
+          name: "input_4",
           label: "Title:",
           placeholder: "Summarize the project in 10 words or less",
         },
         {
-          name: "CorpDiscount",
+          name: "input_5",
           label: "Corporate discount (%):",
           placeholder: "This is optional",
         },
@@ -86,25 +86,25 @@ const App = () => {
       INV: [
         // Invoice
         {
-          name: "To",
+          name: "input_0",
           label: "To:",
           placeholder:
             "Name of Client / Company (e.g. Mr. Jones; Lubeck Shipping, LLC.; etc.)",
         },
         {
-          name: "Address",
+          name: "input_1",
           label: "Address:",
           placeholder: "Location of Client / Project",
         },
-        { name: "Date", label: "Date:", placeholder: "01-October-2022" },
-        { name: "DocNum", label: "Invoice #:", placeholder: "INVxxxx" },
+        { name: "input_2", label: "Date:", placeholder: "01-October-2022" },
+        { name: "input_3", label: "Invoice #:", placeholder: "INVxxxx" },
         {
-          name: "Title",
+          name: "input_4",
           label: "Title:",
           placeholder: "Summarize the project in 10 words or less",
         },
         {
-          name: "CorpDiscount",
+          name: "input_5",
           label: "Corporate discount (%):",
           placeholder: "This is optional",
         },
@@ -112,44 +112,44 @@ const App = () => {
       QUOTE: [
         // Quotation
         {
-          name: "To",
+          name: "input_0",
           label: "To:",
           placeholder:
             "Name of Client / Company (e.g. Mr. Jones; Lubeck Shipping, LLC.; etc.)",
         },
         {
-          name: "Address",
+          name: "input_1",
           label: "Address:",
           placeholder: "Location of Client / Project",
         },
-        { name: "Date", label: "Date:", placeholder: "01-October-2022" },
+        { name: "input_2", label: "Date:", placeholder: "01-October-2022" },
         {
-          name: "DocNum",
+          name: "input_3",
           label: "Quotation #:",
           placeholder: "MFTSxxxxxxxx",
         },
         {
-          name: "Title",
+          name: "input_4",
           label: "Title:",
           placeholder: "Summarize the project in 10 words or less",
         },
         {
-          name: "Duration",
+          name: "input_5",
           label: "Project Duration:",
           placeholder: "Total number of working days/hours",
         },
         {
-          name: "CorpDiscount",
+          name: "input_6",
           label: "Corporate discount (%):",
           placeholder: "This is optional",
         },
         {
-          name: "Warranty",
+          name: "input_7",
           label: "Warranty:",
           placeholder: "Number of years warranty is valid",
         },
         {
-          name: "Downpayment",
+          name: "input_8",
           label: "Downpayment (%):",
           placeholder: "Initial payment from client to begin work",
         },
@@ -157,43 +157,43 @@ const App = () => {
       SOA: [
         // Statement of Account
         {
-          name: "To",
+          name: "input_0",
           label: "To:",
           placeholder:
             "Name of Client / Company (e.g. Mr. Jones; Lubeck Shipping, LLC.; etc.)",
         },
         {
-          name: "Address",
+          name: "input_1",
           label: "Address:",
           placeholder: "Location of Client / Project",
         },
-        { name: "Date", label: "Date:", placeholder: "01-October-2022" },
+        { name: "input_2", label: "Date:", placeholder: "01-October-2022" },
         {
-          name: "DocNum",
+          name: "input_3",
           label: "Invoice/s #:",
           placeholder: "Relevant invoices, separate by comma",
         },
         {
-          name: "Title",
+          name: "input_4",
           label: "Title:",
           placeholder: "Summarize the project in 10 words or less",
         },
         {
-          name: "CorpDiscount",
+          name: "input_5",
           label: "Corporate discount (%):",
           placeholder: "This is optional",
         },
       ],
       PAYROLL: [
         // Payroll
-        { name: "Date", label: "Date:", placeholder: "01-October-2022" },
+        { name: "input_0", label: "Date:", placeholder: "01-October-2022" },
         {
-          name: "DocNum",
+          name: "input_1",
           label: "Payroll #:",
           placeholder: "",
         },
         {
-          name: "Title",
+          name: "input_2",
           label: "Title:",
           placeholder: "Summarize the project in 10 words or less",
         },
@@ -344,20 +344,32 @@ const App = () => {
   const handleGeneratePDF = () => {
     // Prepare the input data for the PDF document
     let inputData = {};
-    if (selectedOption !== "PAYROLL") {
+    if (selectedOption === "QUOTE") {
       inputData = {
-        input_0: inputFields[0].To,
-        input_1: inputFields[1].Address,
-        input_2: inputFields[2].Date,
-        input_3: inputFields[3].DocNum,
-        input_4: inputFields[4].Title,
-        input_8: inputFields[8].Downpayment,
+        input_0: inputFields[0].input_0,
+        input_1: inputFields[1].input_1,
+        input_2: inputFields[2].input_2,
+        input_3: inputFields[3].input_3,
+        input_4: inputFields[4].input_4,
+        input_5: inputFields[5].input_5,
+        input_6: inputFields[6].input_6,
+        input_7: inputFields[7].input_7,
+        input_8: inputFields[8].input_8,
+      };
+    } else if (selectedOption !== "PAYROLL") {
+      inputData = {
+        input_0: inputFields[0].input_0,
+        input_1: inputFields[1].input_1,
+        input_2: inputFields[2].input_2,
+        input_3: inputFields[3].input_3,
+        input_4: inputFields[4].input_4,
+        input_5: inputFields[5].input_5,
       };
     } else {
       inputData = {
-        input_0: inputFields[0].Date,
-        input_1: inputFields[1].DocNum,
-        input_2: inputFields[2].Title,
+        input_0: inputFields[0].input_0,
+        input_1: inputFields[1].input_1,
+        input_2: inputFields[2].input_2,
       };
     }
 

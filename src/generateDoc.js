@@ -78,7 +78,7 @@ export const generatePDF = (selectedOption, inputData, tableData) => {
 
   if (selectedOption === "QUOTE") {
     doc.setFontSize(11);
-    // doc.text(`Project Duration: ${}`)
+    doc.text(`Project Duration: ${inputData.input_5}`, xLeft, 190);
     doc.setFontSize(9);
     doc.text(`Terms and Agreement:`, xLeft, 200);
     doc.text(
