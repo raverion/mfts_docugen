@@ -76,10 +76,25 @@ export const generatePDF = (selectedOption, inputData, tableData) => {
     theme: "striped",
   });
 
-  doc.setFontSize(9);
   if (selectedOption === "QUOTE") {
-    doc.text(`Terms and Agreement`, xLeft, 205);
-    doc.text(`1. ${inputData.input_8}% downpayment`, xLeft, 210);
+    doc.setFontSize(11);
+    // doc.text(`Project Duration: ${}`)
+    doc.setFontSize(9);
+    doc.text(`Terms and Agreement:`, xLeft, 200);
+    doc.text(
+      `1. ${
+        inputData.input_8
+      }% downpayment upon confirmation of this quotation, and ${
+        100 - inputData.input_8
+      }% upon completion of the project.`,
+      xLeft,
+      205
+    );
+    doc.text(
+      `2. Work will not commence without the advance payment.`,
+      xLeft,
+      210
+    );
   }
 
   if (selectedOption !== "PAYROLL") {
