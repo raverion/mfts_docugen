@@ -4,16 +4,21 @@ import "jspdf-autotable";
 export const generatePDF = (selectedOption, inputData, tableData) => {
   const doc = new jsPDF();
 
+  const logoScale = 1;
+  const footerScale = 1.4;
+  const xLeft = 15;
+  const xRight = 140;
+
   // Load the image file
-  const imgData = require("./MFTS_logo.png");
+  let imgData = require("./MFTS_logo.png");
   // Add the image to the PDF document
   doc.addImage(
     imgData,
     "PNG",
     55, // X coordinate of the image
     10, // Y coordinate of the image
-    96, // Width of the image
-    30 // Height of the image
+    Math.trunc(96 * logoScale), // Width of the image
+    Math.trunc(30 * logoScale) // Height of the image
   );
 
   // Set the font and font size
@@ -22,10 +27,10 @@ export const generatePDF = (selectedOption, inputData, tableData) => {
 
   if (selectedOption !== "PAYROLL") {
     // Add content to the PDF document using the input data
-    doc.text(`To: ${inputData.input_0}`, 10, 55); // To
-    doc.text(`Address: ${inputData.input_1}`, 10, 60); // Address
-    doc.text(`Date: ${inputData.input_2}`, 150, 55); // Date
-    doc.text(`Quote/Invoice#: ${inputData.input_3}`, 150, 60); // DocNum
+    doc.text(`To: ${inputData.input_0}`, xLeft, 55); // To
+    doc.text(`Address: ${inputData.input_1}`, xLeft, 60); // Address
+    doc.text(`Date: ${inputData.input_2}`, xRight, 55); // Date
+    doc.text(`Quote/Invoice#: ${inputData.input_3}`, xRight, 60); // DocNum
   }
 
   doc.setFontSize(14);
@@ -71,12 +76,24 @@ export const generatePDF = (selectedOption, inputData, tableData) => {
     theme: "striped",
   });
 
-  doc.setFontSize(11);
+  doc.setFontSize(9);
   if (selectedOption === "QUOTE") {
-    doc.text(`Terms and Agreemant`, 10, 175);
-    doc.text(`1. ${inputData.Downpayment}% downpayment`, 10, 185);
+    doc.text(`Terms and Agreement`, xLeft, 205);
+    doc.text(`1. ${inputData.input_8}% downpayment`, xLeft, 210);
   }
 
+  if (selectedOption !== "PAYROLL") {
+    imgData = require("./Footer.png");
+    // Add the image to the PDF document
+    doc.addImage(
+      imgData,
+      "PNG",
+      xLeft - 3, // X coordinate of the image
+      215, // Y coordinate of the image
+      Math.trunc(122 * footerScale), // Width of the image
+      Math.trunc(50 * footerScale) // Height of the image
+    );
+  }
   // Save the PDF document
   doc.save(
     `${selectedOption} - ${inputData.DocNum} - ${inputData.Date} - ${inputData.To}.pdf`
