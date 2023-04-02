@@ -14,9 +14,9 @@ export const generatePDF = (
   const xLeft = 15;
   const xRight = 140;
 
-  // Load the image file
-  let imgData = require("./MFTS_logo.png");
-  // Add the image to the PDF document
+  let currY = 0;
+
+  let imgData = require("./MFTS_logo.png"); // Load the image file
   doc.addImage(
     imgData,
     "PNG",
@@ -28,7 +28,7 @@ export const generatePDF = (
 
   // Set the font and font size
   doc.setFont("helvetica");
-  doc.setFontSize(11);
+  doc.setFontSize(9);
 
   if (selectedOption !== "PAYROLL") {
     // Add content to the PDF document using the input data
@@ -53,7 +53,7 @@ export const generatePDF = (
 
   // Set the text to center align
   let textWidth = 0;
-  let currY = 0; // for table
+  doc.setFontSize(11);
   if (selectedOption !== "PAYROLL") {
     textWidth = doc.getTextWidth(inputData.input_4);
     const pageWidth = doc.internal.pageSize.width;
@@ -74,8 +74,10 @@ export const generatePDF = (
   doc.setFontSize(10);
   doc.text(`MATERIALS:`, xLeft, currY);
   currY += 2;
-  const tableA = doc.autoTable({
+  doc.autoTable({
     startY: currY,
+    // headStyles: { halign: "center", fillColor: [52, 79, 188] },
+    headStyles: { halign: "center", fillColor: [120, 120, 120] },
     head: [["Description", "Quantity", "Unit", "Rate", "Total", "Remarks"]],
     body: tableData.map((row) => {
       const { description, quantity, unit, rate, remarks } = row;
@@ -84,21 +86,20 @@ export const generatePDF = (
     theme: "striped",
   });
 
-  currY = currY + tableData.length * 10 + 10;
-
-  // alert(tableData.length);
-  // let startY_tableB = 160;
+  currY = currY + tableData.length * 10 + 13;
 
   doc.text(`SCOPE OF WORK:`, xLeft, currY);
   currY += 2;
   doc.autoTable({
     startY: currY,
+    // headStyles: { halign: "center", fillColor: [174, 53, 53] },
+    headStyles: { halign: "center", fillColor: [120, 120, 120] },
     head: [["Description", "Labor Fee", "Remarks"]],
     body: tableDataB.map((row) => {
       const { description, amount, remarks } = row;
       return [description, amount, remarks];
     }),
-    theme: "grid",
+    theme: "striped",
   });
 
   if (selectedOption === "QUOTE") {
@@ -120,16 +121,20 @@ export const generatePDF = (
       xLeft,
       210
     );
+    doc.text(
+      `3. Warranty is valid for ${inputData.input_7} starting from date of project commencement.`,
+      xLeft,
+      215
+    );
   }
 
   if (selectedOption !== "PAYROLL") {
     imgData = require("./Footer.png");
-    // Add the image to the PDF document
     doc.addImage(
       imgData,
       "PNG",
       xLeft - 3, // X coordinate of the image
-      215, // Y coordinate of the image
+      221, // Y coordinate of the image
       Math.trunc(122 * footerScale), // Width of the image
       Math.trunc(50 * footerScale) // Height of the image
     );

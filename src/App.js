@@ -525,6 +525,12 @@ const App = () => {
 
       <div className="separator"></div>
       <div className="particulars_label">Materials:</div>
+      <div>
+        <label className="materials_note">
+          NOTE: For lump-sum items, put "1" in Quantity and "LS" in Unit. Then
+          put the lump-sum amount in the Unit Price, and leave Total blank.
+        </label>
+      </div>
       <div className="separator"></div>
 
       <div>{renderTableFields()}</div>
