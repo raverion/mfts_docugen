@@ -140,7 +140,17 @@ export const generatePDF = (
     );
   }
   // Save the PDF document
-  doc.save(
-    `${selectedOption} - ${inputData.DocNum} - ${inputData.Date} - ${inputData.To}.pdf`
-  );
+  if (selectedOption === "QUOTE") {
+    doc.save(
+      `${selectedOption} - ${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
+    );
+  } else if (selectedOption !== "PAYROLL") {
+    doc.save(
+      `${selectedOption} - ${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
+    );
+  } else {
+    doc.save(
+      `${selectedOption} - ${inputData.input_1} - ${inputData.input_0}.pdf`
+    );
+  }
 };

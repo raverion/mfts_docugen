@@ -454,30 +454,30 @@ const App = () => {
     let inputData = {};
     if (selectedOption === "QUOTE") {
       inputData = {
-        input_0: inputFields[0].input_0,
-        input_1: inputFields[1].input_1,
-        input_2: inputFields[2].input_2,
-        input_3: inputFields[3].input_3,
-        input_4: inputFields[4].input_4,
-        input_5: inputFields[5].input_5,
-        input_6: inputFields[6].input_6,
-        input_7: inputFields[7].input_7,
-        input_8: inputFields[8].input_8,
+        input_0: inputFields[0].input_0, // To
+        input_1: inputFields[1].input_1, // Address
+        input_2: inputFields[2].input_2, // Date
+        input_3: inputFields[3].input_3, // Quotation No.
+        input_4: inputFields[4].input_4, // Title
+        input_5: inputFields[5].input_5, // Project Duration
+        input_6: inputFields[6].input_6, // Corporate Discount
+        input_7: inputFields[7].input_7, // Warranty
+        input_8: inputFields[8].input_8, // Downpayment
       };
     } else if (selectedOption !== "PAYROLL") {
       inputData = {
-        input_0: inputFields[0].input_0,
-        input_1: inputFields[1].input_1,
-        input_2: inputFields[2].input_2,
-        input_3: inputFields[3].input_3,
-        input_4: inputFields[4].input_4,
-        input_5: inputFields[5].input_5,
+        input_0: inputFields[0].input_0, // To
+        input_1: inputFields[1].input_1, // Address
+        input_2: inputFields[2].input_2, // Date
+        input_3: inputFields[3].input_3, // Invoice No.
+        input_4: inputFields[4].input_4, // Title
+        input_5: inputFields[5].input_5, // Corporate Discount
       };
     } else {
       inputData = {
-        input_0: inputFields[0].input_0,
-        input_1: inputFields[1].input_1,
-        input_2: inputFields[2].input_2,
+        input_0: inputFields[0].input_0, // Date
+        input_1: inputFields[1].input_1, // Payroll No.
+        input_2: inputFields[2].input_2, // Title
       };
     }
 
