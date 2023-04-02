@@ -37,8 +37,6 @@ const App = () => {
     return optionFields.map((field, index) => {
       const { name, label, placeholder } = field;
 
-      // alert(`OptionFields0=>${name}`);
-
       return (
         <div key={index}>
           <label className="labels">{label}</label>
@@ -70,7 +68,11 @@ const App = () => {
           label: "Address:",
           placeholder: "Location of Client / Project",
         },
-        { name: "input_2", label: "Date:", placeholder: "01-October-2022" },
+        {
+          name: "input_2",
+          label: "Date:",
+          placeholder: "e.g. 01-October-2022",
+        },
         { name: "input_3", label: "Invoice #:", placeholder: "INVxxxx" },
         {
           name: "input_4",
@@ -96,7 +98,11 @@ const App = () => {
           label: "Address:",
           placeholder: "Location of Client / Project",
         },
-        { name: "input_2", label: "Date:", placeholder: "01-October-2022" },
+        {
+          name: "input_2",
+          label: "Date:",
+          placeholder: "e.g. 01-October-2022",
+        },
         { name: "input_3", label: "Invoice #:", placeholder: "INVxxxx" },
         {
           name: "input_4",
@@ -122,7 +128,11 @@ const App = () => {
           label: "Address:",
           placeholder: "Location of Client / Project",
         },
-        { name: "input_2", label: "Date:", placeholder: "01-October-2022" },
+        {
+          name: "input_2",
+          label: "Date:",
+          placeholder: "e.g. 01-October-2022",
+        },
         {
           name: "input_3",
           label: "Quotation #:",
@@ -167,7 +177,11 @@ const App = () => {
           label: "Address:",
           placeholder: "Location of Client / Project",
         },
-        { name: "input_2", label: "Date:", placeholder: "01-October-2022" },
+        {
+          name: "input_2",
+          label: "Date:",
+          placeholder: "e.g. 01-October-2022",
+        },
         {
           name: "input_3",
           label: "Invoice/s #:",
@@ -186,11 +200,15 @@ const App = () => {
       ],
       PAYROLL: [
         // Payroll
-        { name: "input_0", label: "Date:", placeholder: "01-October-2022" },
+        {
+          name: "input_0",
+          label: "Date:",
+          placeholder: "e.g. 01-October-2022",
+        },
         {
           name: "input_1",
           label: "Payroll #:",
-          placeholder: "",
+          placeholder: "This field is optional",
         },
         {
           name: "input_2",
@@ -205,7 +223,7 @@ const App = () => {
   //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
-  // TABLE FIELDS
+  // TABLE FIELDS - MATERIALS
   const [particularsFields, setFields] = useState([
     {
       description: "",
@@ -243,7 +261,7 @@ const App = () => {
             <th>Description</th>
             <th>Quantity</th>
             <th>Unit</th>
-            <th>Rate</th>
+            <th>Unit Price</th>
             <th>Total</th>
             <th>Remarks</th>
           </tr>
@@ -260,7 +278,7 @@ const App = () => {
                     values[index].description = e.target.value;
                     setFields(values);
                   }}
-                  placeholder="Description"
+                  placeholder="Generic name and/or brand of specific material"
                   className="descriptionField"
                 />
               </td>
@@ -341,6 +359,96 @@ const App = () => {
   //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
+  // TABLE FIELDS - SCOPE OF WORK
+  const [particularsFieldsB, setFieldsB] = useState([
+    {
+      descriptionB: "",
+      amountB: "",
+      remarksB: "",
+    },
+  ]);
+  const handleAddFieldB = () => {
+    setFieldsB([
+      ...particularsFieldsB,
+      {
+        descriptionB: "",
+        amountB: "",
+        remarksB: "",
+      },
+    ]);
+  };
+  const handleRemoveFieldB = (index) => {
+    const values = [...particularsFieldsB];
+    values.splice(index, 1);
+    setFieldsB(values);
+  };
+
+  const renderTableFieldsB = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Labor Fee</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {particularsFieldsB.map((field, index) => (
+            <tr key={index}>
+              <td>
+                <input
+                  type="text"
+                  value={field.descriptionB}
+                  onChange={(e) => {
+                    const values = [...particularsFieldsB];
+                    values[index].descriptionB = e.target.value;
+                    setFieldsB(values);
+                  }}
+                  placeholder="Describe the specific task / activity"
+                  className="descriptionFieldB"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={field.amountB}
+                  onChange={(e) => {
+                    const values = [...particularsFieldsB];
+                    values[index].amountB = e.target.value;
+                    setFieldsB(values);
+                  }}
+                  placeholder="AED"
+                  className="totalFieldB"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={field.remarksB}
+                  onChange={(e) => {
+                    const values = [...particularsFieldsB];
+                    values[index].remarksB = e.target.value;
+                    setFieldsB(values);
+                  }}
+                  placeholder="Comments"
+                  className="remarksFieldB"
+                />
+              </td>
+              <td>
+                <button onClick={() => handleRemoveFieldB(index)}>
+                  Remove
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+  //-------------------------------------------------------------------------------------------------------
+
+  //-------------------------------------------------------------------------------------------------------
   const handleGeneratePDF = () => {
     // Prepare the input data for the PDF document
     let inputData = {};
@@ -382,8 +490,14 @@ const App = () => {
       remarks: field.remarks,
     }));
 
+    const tableDataB = particularsFieldsB.map((field) => ({
+      description: field.descriptionB,
+      amount: field.amountB,
+      remarks: field.remarksB,
+    }));
+
     // Call the generatePDF function
-    generatePDF(selectedOption, inputData, tableData);
+    generatePDF(selectedOption, inputData, tableData, tableDataB);
   };
   //-------------------------------------------------------------------------------------------------------
 
@@ -410,7 +524,7 @@ const App = () => {
       <div>{renderInputFields()}</div>
 
       <div className="separator"></div>
-      <div className="particulars_label">Particulars:</div>
+      <div className="particulars_label">Materials:</div>
       <div className="separator"></div>
 
       <div>{renderTableFields()}</div>
@@ -419,6 +533,17 @@ const App = () => {
           Add Item
         </button>
       </div>
+      <div className="separator"></div>
+      <div className="particulars_label">Scope of Work:</div>
+      <div className="separator"></div>
+
+      <div>{renderTableFieldsB()}</div>
+      <div>
+        <button className="AddItemButton" onClick={handleAddFieldB}>
+          Add Item
+        </button>
+      </div>
+
       <button className="GenerateButton" onClick={handleGeneratePDF}>
         Generate pdf
       </button>
