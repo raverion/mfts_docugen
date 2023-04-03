@@ -224,6 +224,144 @@ const App = () => {
 
   //-------------------------------------------------------------------------------------------------------
   // TABLE FIELDS - MATERIALS
+  const [particularsFieldsA, setFieldsA] = useState([
+    {
+      description: "",
+      quantity: "",
+      unit: "",
+      rate: "",
+      total: "",
+      remarks: "",
+    },
+  ]);
+  const handleAddFieldA = () => {
+    setFieldsA([
+      ...particularsFieldsA,
+      {
+        description: "",
+        quantity: "",
+        unit: "",
+        rate: "",
+        total: "",
+        remarks: "",
+      },
+    ]);
+  };
+  const handleRemoveFieldA = (index) => {
+    const values = [...particularsFieldsA];
+    values.splice(index, 1);
+    setFieldsA(values);
+  };
+
+  const renderTableFieldsA = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {particularsFieldsA.map((field, index) => (
+            <tr key={index}>
+              <td>
+                <input
+                  type="text"
+                  value={field.description}
+                  onChange={(e) => {
+                    const values = [...particularsFieldsA];
+                    values[index].description = e.target.value;
+                    setFieldsA(values);
+                  }}
+                  placeholder="Generic name and/or brand of specific material"
+                  className="descriptionField"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={field.quantity}
+                  onChange={(e) => {
+                    const values = [...particularsFieldsA];
+                    values[index].quantity = e.target.value;
+                    setFieldsA(values);
+                  }}
+                  placeholder="Quantity"
+                  className="quantityField"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={field.unit}
+                  onChange={(e) => {
+                    const values = [...particularsFieldsA];
+                    values[index].unit = e.target.value;
+                    setFieldsA(values);
+                  }}
+                  placeholder="e.g. pcs, boxes"
+                  className="unitField"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={field.rate}
+                  onChange={(e) => {
+                    const values = [...particularsFieldsA];
+                    values[index].rate = e.target.value;
+                    setFieldsA(values);
+                  }}
+                  placeholder="AED"
+                  className="rateField"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={field.total}
+                  onChange={(e) => {
+                    const values = [...particularsFieldsA];
+                    values[index].total = e.target.value;
+                    setFieldsA(values);
+                  }}
+                  placeholder="AED"
+                  className="totalField"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={field.remarks}
+                  onChange={(e) => {
+                    const values = [...particularsFieldsA];
+                    values[index].remarks = e.target.value;
+                    setFieldsA(values);
+                  }}
+                  placeholder="Comments"
+                  className="remarksField"
+                />
+              </td>
+              <td>
+                <button onClick={() => handleRemoveFieldA(index)}>
+                  Remove
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+  //-------------------------------------------------------------------------------------------------------
+
+  //-------------------------------------------------------------------------------------------------------
+  // TABLE FIELDS - MATERIALS
   const [particularsFields, setFields] = useState([
     {
       description: "",
@@ -522,6 +660,23 @@ const App = () => {
       </select>
 
       <div>{renderInputFields()}</div>
+
+      <div className="separator"></div>
+      <div className="particulars_label">Particulars:</div>
+      <div>
+        <label className="particulars_note">
+          NOTE: For lump-sum items, put "1" in Quantity and "LS" in Unit. Then
+          put the lump-sum amount in the Unit Price, and leave Total blank.
+        </label>
+      </div>
+      <div className="separator"></div>
+
+      <div>{renderTableFieldsA()}</div>
+      <div>
+        <button className="AddItemButton" onClick={handleAddFieldA}>
+          Add Item
+        </button>
+      </div>
 
       <div className="separator"></div>
       <div className="particulars_label">Materials:</div>
