@@ -136,7 +136,7 @@ const App = () => {
         {
           name: "input_3",
           label: "Quotation #:",
-          placeholder: "MFTSxxxxxxxx",
+          placeholder: "e.g. 'MFTS00841022', 'QT0085'",
         },
         {
           name: "input_4",
@@ -278,7 +278,7 @@ const App = () => {
                     values[index].description = e.target.value;
                     setFieldsA(values);
                   }}
-                  placeholder="Generic name and/or brand of specific material"
+                  placeholder="Describe the job / activity"
                   className="descriptionField"
                 />
               </td>
@@ -501,7 +501,7 @@ const App = () => {
   const [particularsFieldsB, setFieldsB] = useState([
     {
       descriptionB: "",
-      amountB: "",
+      // amountB: "",
       remarksB: "",
     },
   ]);
@@ -510,7 +510,7 @@ const App = () => {
       ...particularsFieldsB,
       {
         descriptionB: "",
-        amountB: "",
+        // amountB: "",
         remarksB: "",
       },
     ]);
@@ -527,7 +527,7 @@ const App = () => {
         <thead>
           <tr>
             <th>Description</th>
-            <th>Labor Fee</th>
+            {/* <th>Labor Fee</th> */}
             <th>Remarks</th>
           </tr>
         </thead>
@@ -543,11 +543,11 @@ const App = () => {
                     values[index].descriptionB = e.target.value;
                     setFieldsB(values);
                   }}
-                  placeholder="Describe the specific task / activity"
+                  placeholder="Describe the specific step in the procedure. Enumerate with '1.)', '2.)', etc."
                   className="descriptionFieldB"
                 />
               </td>
-              <td>
+              {/* <td>
                 <input
                   type="number"
                   value={field.amountB}
@@ -559,7 +559,7 @@ const App = () => {
                   placeholder="AED"
                   className="totalFieldB"
                 />
-              </td>
+              </td> */}
               <td>
                 <input
                   type="text"
@@ -619,6 +619,15 @@ const App = () => {
       };
     }
 
+    const tableDataA = particularsFieldsA.map((field) => ({
+      description: field.description,
+      quantity: field.quantity,
+      unit: field.unit,
+      rate: field.rate,
+      total: field.total,
+      remarks: field.remarks,
+    }));
+
     const tableData = particularsFields.map((field) => ({
       description: field.description,
       quantity: field.quantity,
@@ -630,12 +639,12 @@ const App = () => {
 
     const tableDataB = particularsFieldsB.map((field) => ({
       description: field.descriptionB,
-      amount: field.amountB,
+      // amount: field.amountB,
       remarks: field.remarksB,
     }));
 
     // Call the generatePDF function
-    generatePDF(selectedOption, inputData, tableData, tableDataB);
+    generatePDF(selectedOption, inputData, tableDataA, tableData, tableDataB);
   };
   //-------------------------------------------------------------------------------------------------------
 
@@ -696,6 +705,12 @@ const App = () => {
       </div>
       <div className="separator"></div>
       <div className="particulars_label">Scope of Work:</div>
+      <div>
+        <label className="materials_note">
+          NOTE: Populate this field with step-by-step procedure for the job/s
+          specified in the Particulars fields.
+        </label>
+      </div>
       <div className="separator"></div>
 
       <div>{renderTableFieldsB()}</div>

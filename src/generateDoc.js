@@ -4,6 +4,7 @@ import "jspdf-autotable";
 export const generatePDF = (
   selectedOption,
   inputData,
+  tableDataA,
   tableData,
   tableDataB
 ) => {
@@ -72,6 +73,23 @@ export const generatePDF = (
   // const totalRow = ["", "", "", "", totalSum, ""];
 
   doc.setFontSize(10);
+
+  doc.text(`PARTICULARS:`, xLeft, currY);
+  currY += 2;
+  doc.autoTable({
+    startY: currY,
+    // headStyles: { halign: "center", fillColor: [52, 79, 188] },
+    headStyles: { halign: "center", fillColor: [120, 120, 120] },
+    head: [["Description", "Quantity", "Unit", "Rate", "Total", "Remarks"]],
+    body: tableDataA.map((row) => {
+      const { description, quantity, unit, rate, remarks } = row;
+      return [description, quantity, unit, rate, quantity * rate, remarks];
+    }),
+    theme: "striped",
+  });
+
+  currY = currY + tableDataA.length * 10 + 10;
+
   doc.text(`MATERIALS:`, xLeft, currY);
   currY += 2;
   doc.autoTable({
@@ -93,11 +111,11 @@ export const generatePDF = (
   doc.autoTable({
     startY: currY,
     // headStyles: { halign: "center", fillColor: [174, 53, 53] },
-    headStyles: { halign: "center", fillColor: [120, 120, 120] },
-    head: [["Description", "Labor Fee", "Remarks"]],
+    // headStyles: { halign: "center", fillColor: [120, 120, 120] },
+    // head: [["Description", "Remarks"]],
     body: tableDataB.map((row) => {
-      const { description, amount, remarks } = row;
-      return [description, amount, remarks];
+      const { description, remarks } = row;
+      return [description, remarks];
     }),
     theme: "striped",
   });
@@ -121,11 +139,14 @@ export const generatePDF = (
       xLeft,
       210
     );
-    doc.text(
-      `3. Warranty is valid for ${inputData.input_7} starting from date of project commencement.`,
-      xLeft,
-      215
-    );
+    if (inputData.input_7) {
+      // if Warranty field is populated
+      doc.text(
+        `3. Warranty is valid for ${inputData.input_7} starting from date of project commencement.`,
+        xLeft,
+        215
+      );
+    }
   }
 
   if (selectedOption !== "PAYROLL") {
@@ -142,15 +163,13 @@ export const generatePDF = (
   // Save the PDF document
   if (selectedOption === "QUOTE") {
     doc.save(
-      `${selectedOption} - ${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
+      `${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
     );
   } else if (selectedOption !== "PAYROLL") {
     doc.save(
       `${selectedOption} - ${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
     );
   } else {
-    doc.save(
-      `${selectedOption} - ${inputData.input_1} - ${inputData.input_0}.pdf`
-    );
+    doc.save(`${inputData.input_1} - ${inputData.input_0}.pdf`);
   }
 };
