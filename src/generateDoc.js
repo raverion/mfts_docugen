@@ -15,6 +15,16 @@ export const generatePDF = (
   const xLeft = 15;
   const xRight = 140;
 
+  let totalSumA = tableDataA.reduce(
+    (acc, obj) => acc + Number(obj.quantity * obj.rate),
+    0
+  );
+  let totalSum = tableData.reduce(
+    (acc, obj) => acc + Number(obj.quantity * obj.rate),
+    0
+  );
+  let totalFinalSum = totalSumA + totalSum;
+
   let currY = 0;
 
   let imgData = require("./MFTS_logo.png"); // Load the image file
@@ -69,9 +79,6 @@ export const generatePDF = (
     currY = 49;
   }
 
-  // const totalSum = tableData.reduce((acc, row) => acc + row[4], 0);
-  // const totalRow = ["", "", "", "", totalSum, ""];
-
   doc.setFontSize(10);
 
   doc.text(`PARTICULARS:`, xLeft, currY);
@@ -79,40 +86,94 @@ export const generatePDF = (
   doc.autoTable({
     startY: currY,
     // headStyles: { halign: "center", fillColor: [52, 79, 188] },
-    headStyles: { halign: "center", fillColor: [120, 120, 120] },
-    head: [["Description", "Quantity", "Unit", "Rate", "Total", "Remarks"]],
+    headStyles: {
+      halign: "center",
+      fillColor: [120, 120, 120],
+      fontSize: 8,
+      lineColor: [0, 0, 0],
+      lineWidth: 0.1,
+    },
+    footStyles: {
+      halign: "left",
+      fillColor: [190, 190, 190],
+      textColor: [0, 0, 0],
+      fontSize: 8,
+      lineColor: [0, 0, 0],
+      lineWidth: 0.1,
+    },
+    bodyStyles: {
+      fontSize: 8,
+    },
+    head: [["Description", "Quantity", "Unit", "Rate", "Amount", "Remarks"]],
     body: tableDataA.map((row) => {
       const { description, quantity, unit, rate, remarks } = row;
       return [description, quantity, unit, rate, quantity * rate, remarks];
     }),
+    foot: [["", "", "", "Subtotal", `${totalSumA}   AED`, ""]],
     theme: "striped",
   });
 
-  currY = currY + tableDataA.length * 10 + 10;
+  currY = currY + tableDataA.length * 10 + 13;
 
   doc.text(`MATERIALS:`, xLeft, currY);
   currY += 2;
   doc.autoTable({
     startY: currY,
     // headStyles: { halign: "center", fillColor: [52, 79, 188] },
-    headStyles: { halign: "center", fillColor: [120, 120, 120] },
-    head: [["Description", "Quantity", "Unit", "Rate", "Total", "Remarks"]],
+    headStyles: {
+      halign: "center",
+      fillColor: [120, 120, 120],
+      fontSize: 8,
+      lineColor: [0, 0, 0],
+      lineWidth: 0.1,
+    },
+    footStyles: {
+      halign: "left",
+      fillColor: [190, 190, 190],
+      textColor: [0, 0, 0],
+      fontSize: 8,
+      lineColor: [0, 0, 0],
+      lineWidth: 0.1,
+    },
+    bodyStyles: {
+      fontSize: 8,
+    },
+    head: [["Description", "Quantity", "Unit", "Rate", "Amount", "Remarks"]],
     body: tableData.map((row) => {
       const { description, quantity, unit, rate, remarks } = row;
       return [description, quantity, unit, rate, quantity * rate, remarks];
     }),
+    foot: [["", "", "", "Subtotal", `${totalSum}   AED`, ""]],
     theme: "striped",
   });
 
-  currY = currY + tableData.length * 10 + 13;
+  currY = currY + tableData.length * 10 + 10;
+
+  // Total
+  doc.autoTable({
+    startY: currY,
+    footStyles: {
+      halign: "left",
+      fillColor: [0, 0, 0],
+      // textColor: [0, 0, 0],
+      fontSize: 8,
+      lineColor: [0, 0, 0],
+    },
+    foot: [
+      ["", "", "", "", "", "", "", "", "", "Total", `${totalFinalSum}   AED`],
+    ],
+    theme: "striped",
+  });
+
+  currY += 15;
 
   doc.text(`SCOPE OF WORK:`, xLeft, currY);
   currY += 2;
   doc.autoTable({
     startY: currY,
-    // headStyles: { halign: "center", fillColor: [174, 53, 53] },
-    // headStyles: { halign: "center", fillColor: [120, 120, 120] },
-    // head: [["Description", "Remarks"]],
+    bodyStyles: {
+      fontSize: 8,
+    },
     body: tableDataB.map((row) => {
       const { description, remarks } = row;
       return [description, remarks];
@@ -122,9 +183,9 @@ export const generatePDF = (
 
   if (selectedOption === "QUOTE") {
     doc.setFontSize(11);
-    doc.text(`Project Duration: ${inputData.input_5}`, xLeft, 190);
-    doc.setFontSize(9);
-    doc.text(`Terms and Agreement:`, xLeft, 200);
+    doc.text(`Project Duration: ${inputData.input_5}`, xLeft, 195);
+    doc.setFontSize(8);
+    doc.text(`Terms and Agreement:`, xLeft, 203);
     doc.text(
       `1. ${
         inputData.input_8
@@ -132,19 +193,19 @@ export const generatePDF = (
         100 - inputData.input_8
       }% upon completion of the project.`,
       xLeft,
-      205
+      208
     );
     doc.text(
       `2. Work will not commence without the advance payment.`,
       xLeft,
-      210
+      213
     );
     if (inputData.input_7) {
       // if Warranty field is populated
       doc.text(
         `3. Warranty is valid for ${inputData.input_7} starting from date of project commencement.`,
         xLeft,
-        215
+        218
       );
     }
   }
