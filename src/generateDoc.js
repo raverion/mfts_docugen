@@ -81,129 +81,179 @@ export const generatePDF = (
 
   doc.setFontSize(10);
 
-  doc.text(`PARTICULARS:`, xLeft, currY);
-  currY += 2;
-  doc.autoTable({
-    startY: currY,
-    // headStyles: { halign: "center", fillColor: [52, 79, 188] },
-    headStyles: {
-      halign: "center",
-      fillColor: [120, 120, 120],
-      fontSize: 8,
-      lineColor: [0, 0, 0],
-      lineWidth: 0.1,
-    },
-    footStyles: {
-      halign: "left",
-      fillColor: [190, 190, 190],
-      textColor: [0, 0, 0],
-      fontSize: 8,
-      lineColor: [0, 0, 0],
-      lineWidth: 0.1,
-    },
-    bodyStyles: {
-      fontSize: 8,
-    },
-    head: [["Description", "Quantity", "Unit", "Rate", "Amount", "Remarks"]],
-    body: tableDataA.map((row) => {
-      const { description, quantity, unit, rate, remarks } = row;
-      return [description, quantity, unit, rate, quantity * rate, remarks];
-    }),
-    foot: [["", "", "", "Subtotal", `${totalSumA}   AED`, ""]],
-    theme: "striped",
-  });
+  if (tableDataA.length > 0) {
+    doc.text(`PARTICULARS:`, xLeft, currY);
+    currY += 2;
+    doc.autoTable({
+      startY: currY,
+      columnStyles: {
+        0: { columnWidth: 85 },
+        1: { columnWidth: 12 },
+        2: { columnWidth: 12 },
+        3: { columnWidth: 23 },
+        4: { columnWidth: 30 },
+        5: { columnWidth: 20 },
+      },
+      headStyles: {
+        halign: "center",
+        fillColor: [120, 120, 120],
+        fontSize: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      footStyles: {
+        halign: "left",
+        fillColor: [190, 190, 190],
+        textColor: [0, 0, 0],
+        fontSize: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      bodyStyles: {
+        fontSize: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      head: [["Description", "Qty", "Unit", "Rate", "Amount", "Remarks"]],
+      body: tableDataA.map((row) => {
+        const { description, quantity, unit, rate, remarks } = row;
+        return [description, quantity, unit, rate, quantity * rate, remarks];
+      }),
+      // foot: [["Subtotal", "", "", "", `${totalSumA}   AED`, ""]],
+      foot: [
+        [
+          "Subtotal",
+          "",
+          "",
+          "",
+          `${totalSumA.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}   AED`,
+          "",
+        ],
+      ],
+      theme: "striped",
+    });
+    currY = currY + tableDataA.length * 6 + 23;
+  }
 
-  currY = currY + tableDataA.length * 10 + 13;
-
-  doc.text(`MATERIALS:`, xLeft, currY);
-  currY += 2;
-  doc.autoTable({
-    startY: currY,
-    // headStyles: { halign: "center", fillColor: [52, 79, 188] },
-    headStyles: {
-      halign: "center",
-      fillColor: [120, 120, 120],
-      fontSize: 8,
-      lineColor: [0, 0, 0],
-      lineWidth: 0.1,
-    },
-    footStyles: {
-      halign: "left",
-      fillColor: [190, 190, 190],
-      textColor: [0, 0, 0],
-      fontSize: 8,
-      lineColor: [0, 0, 0],
-      lineWidth: 0.1,
-    },
-    bodyStyles: {
-      fontSize: 8,
-    },
-    head: [["Description", "Quantity", "Unit", "Rate", "Amount", "Remarks"]],
-    body: tableData.map((row) => {
-      const { description, quantity, unit, rate, remarks } = row;
-      return [description, quantity, unit, rate, quantity * rate, remarks];
-    }),
-    foot: [["", "", "", "Subtotal", `${totalSum}   AED`, ""]],
-    theme: "striped",
-  });
-
-  currY = currY + tableData.length * 10 + 10;
+  if (tableData[0].description !== "") {
+    doc.text(`MATERIALS:`, xLeft, currY);
+    currY += 2;
+    doc.autoTable({
+      startY: currY,
+      columnStyles: {
+        0: { columnWidth: 85 },
+        1: { columnWidth: 12 },
+        2: { columnWidth: 12 },
+        3: { columnWidth: 23 },
+        4: { columnWidth: 30 },
+        5: { columnWidth: 20 },
+      },
+      headStyles: {
+        halign: "center",
+        fillColor: [120, 120, 120],
+        fontSize: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      footStyles: {
+        halign: "left",
+        fillColor: [190, 190, 190],
+        textColor: [0, 0, 0],
+        fontSize: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      bodyStyles: {
+        fontSize: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      head: [["Description", "Qty", "Unit", "Rate", "Amount", "Remarks"]],
+      body: tableData.map((row) => {
+        const { description, quantity, unit, rate, remarks } = row;
+        return [description, quantity, unit, rate, quantity * rate, remarks];
+      }),
+      foot: [
+        [
+          "Subtotal",
+          "",
+          "",
+          "",
+          `${totalSum.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}   AED`,
+          "",
+        ],
+      ],
+      theme: "striped",
+    });
+    currY = currY + tableData.length * 6 + 20;
+  }
 
   // Total
+  const totalrow = [
+    [
+      `TOTAL:`,
+      `${totalFinalSum.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}   AED`,
+    ],
+  ];
   doc.autoTable({
     startY: currY,
-    footStyles: {
-      halign: "left",
-      fillColor: [0, 0, 0],
-      // textColor: [0, 0, 0],
-      fontSize: 8,
-      lineColor: [0, 0, 0],
+    columnStyles: {
+      0: { halign: "left" },
+      1: { halign: "right" },
     },
-    foot: [
-      ["", "", "", "", "", "", "", "", "", "Total", `${totalFinalSum}   AED`],
-    ],
+    body: [totalrow[0]],
     theme: "striped",
   });
 
   currY += 15;
 
-  doc.text(`SCOPE OF WORK:`, xLeft, currY);
-  currY += 2;
-  doc.autoTable({
-    startY: currY,
-    bodyStyles: {
-      fontSize: 8,
-    },
-    body: tableDataB.map((row) => {
-      const { description, remarks } = row;
-      return [description, remarks];
-    }),
-    theme: "striped",
-  });
+  if (tableDataB[0].description !== "") {
+    doc.text(`SCOPE OF WORK:`, xLeft, currY);
+    currY += 2;
+    doc.autoTable({
+      startY: currY,
+      bodyStyles: {
+        fontSize: 8,
+      },
+      body: tableDataB.map((row) => {
+        const { description, remarks } = row;
+        return [description, remarks];
+      }),
+      theme: "striped",
+    });
+  }
 
   if (selectedOption === "QUOTE") {
     doc.setFontSize(11);
-    doc.text(`Project Duration: ${inputData.input_5}`, xLeft, 195);
+    doc.text(`Project Duration: ${inputData.input_5}`, xLeft, 200);
     doc.setFontSize(8);
-    doc.text(`Terms and Agreement:`, xLeft, 203);
-    doc.text(
-      `1. ${
-        inputData.input_8
-      }% downpayment upon confirmation of this quotation, and ${
-        100 - inputData.input_8
-      }% upon completion of the project.`,
-      xLeft,
-      208
-    );
-    doc.text(
-      `2. Work will not commence without the advance payment.`,
-      xLeft,
-      213
-    );
+    doc.text(`Terms and Agreement:`, xLeft, 208);
+    if (inputData.input_8) {
+      doc.text(
+        `1. ${
+          inputData.input_8
+        }% downpayment upon confirmation of this quotation, and ${
+          100 - inputData.input_8
+        }% upon completion of the project. Work will not commence otherwise.`,
+        xLeft,
+        213
+      );
+    } else {
+      doc.text(`1. No advance payment is required.`, xLeft, 213);
+    }
     if (inputData.input_7) {
       // if Warranty field is populated
       doc.text(
-        `3. Warranty is valid for ${inputData.input_7} starting from date of project commencement.`,
+        `2. Warranty is valid for ${inputData.input_7} starting from date of project commencement.`,
         xLeft,
         218
       );
