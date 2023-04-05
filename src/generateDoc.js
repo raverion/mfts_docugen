@@ -29,13 +29,13 @@ export const generatePDF = (
   // Parsing Corporate Discount
   let corpDiscount;
   if (selectedOption === "QUOTE") {
-    corpDiscount = inputData.input_6 / 100;
+    corpDiscount = inputData.input_6;
   } else if (selectedOption !== "PAYROLL") {
-    corpDiscount = inputData.input_5 / 100;
+    corpDiscount = inputData.input_5;
   } else {
     corpDiscount = 0;
   }
-  let corpDiscountAmt = totalFinalSum * corpDiscount;
+  let corpDiscountAmt = (totalFinalSum * corpDiscount) / 100;
   let discountedTotalFinalSum = totalFinalSum - corpDiscountAmt;
 
   // y-coordinate tracker
@@ -224,7 +224,7 @@ export const generatePDF = (
     ];
     const discRow = [
       [
-        `Corporate Discount: ${corpDiscount * 100}%`,
+        `Corporate Discount: ${corpDiscount}%`,
         `(${corpDiscountAmt.toLocaleString("en-US", {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
@@ -352,14 +352,14 @@ export const generatePDF = (
   }
 
   if (selectedOption !== "PAYROLL") {
-    imgData = require("./Footer.png");
+    imgData = require("./Footer2.png");
     doc.addImage(
       imgData,
       "PNG",
       xLeft - 3, // X coordinate of the image
       221, // Y coordinate of the image
-      Math.trunc(122 * footerScale), // Width of the image
-      Math.trunc(50 * footerScale) // Height of the image
+      Math.trunc(132 * footerScale), // Width of the image
+      Math.trunc(52 * footerScale) // Height of the image
     );
   }
   // Save the PDF document
