@@ -13,8 +13,9 @@ export const generatePDF = (
   const logoScale = 0.8;
   const footerScale = 1.4;
   const xLeft = 15;
-  const xRight = 140;
+  const xRight = 155;
 
+  // Calculate Total Amount
   let totalSumA = tableDataA.reduce(
     (acc, obj) => acc + Number(obj.quantity * obj.rate),
     0
@@ -25,9 +26,23 @@ export const generatePDF = (
   );
   let totalFinalSum = totalSumA + totalSum;
 
+  // Parsing Corporate Discount
+  let corpDiscount;
+  if (selectedOption === "QUOTE") {
+    corpDiscount = inputData.input_6 / 100;
+  } else if (selectedOption !== "PAYROLL") {
+    corpDiscount = inputData.input_5 / 100;
+  } else {
+    corpDiscount = 0;
+  }
+  let corpDiscountAmt = totalFinalSum * corpDiscount;
+  let discountedTotalFinalSum = totalFinalSum - corpDiscountAmt;
+
+  // y-coordinate tracker
   let currY = 0;
 
-  let imgData = require("./MFTS_logo.png"); // Load the image file
+  // MFTS logo
+  let imgData = require("./MFTS_logo.png");
   doc.addImage(
     imgData,
     "PNG",
@@ -37,7 +52,7 @@ export const generatePDF = (
     Math.trunc(30 * logoScale) // Height of the image
   );
 
-  // Set the font and font size
+  // Header
   doc.setFont("helvetica");
   doc.setFontSize(9);
 
@@ -49,6 +64,7 @@ export const generatePDF = (
     doc.text(`Quote/Invoice#: ${inputData.input_3}`, xRight, 40); // DocNum
   }
 
+  // Document Type
   doc.setFontSize(14);
   if (selectedOption === "ACKRECEIPT") {
     doc.text(`ACKNOWLEDGEMENT RECEIPT`, 70, 50);
@@ -62,7 +78,7 @@ export const generatePDF = (
     doc.text(`PAYROLL`, 95, 40);
   }
 
-  // Set the text to center align
+  // Title of the Document. Set the text to center align
   let textWidth = 0;
   doc.setFontSize(11);
   if (selectedOption !== "PAYROLL") {
@@ -70,20 +86,19 @@ export const generatePDF = (
     const pageWidth = doc.internal.pageSize.width;
     const centerX = (pageWidth - textWidth) / 2;
     doc.text(`${inputData.input_4}`, centerX, 57); // Add the centered text to the PDF document
-    currY = 64;
+    currY = 62;
   } else {
     textWidth = doc.getTextWidth(inputData.input_2); // for PAYROLL, title is index #2
     const pageWidth = doc.internal.pageSize.width;
     const centerX = (pageWidth - textWidth) / 2;
     doc.text(`${inputData.input_2}`, centerX, 42); // Add the centered text to the PDF document
-    currY = 49;
+    currY = 47;
   }
 
+  // Particulars Table
   doc.setFontSize(10);
-
   if (tableDataA.length > 0) {
-    doc.text(`PARTICULARS:`, xLeft, currY);
-    currY += 2;
+    // doc.text(`PARTICULARS:`, xLeft, currY);
     doc.autoTable({
       startY: currY,
       columnStyles: {
@@ -101,6 +116,11 @@ export const generatePDF = (
         lineColor: [0, 0, 0],
         lineWidth: 0.1,
       },
+      bodyStyles: {
+        fontSize: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
       footStyles: {
         halign: "left",
         fillColor: [190, 190, 190],
@@ -109,12 +129,7 @@ export const generatePDF = (
         lineColor: [0, 0, 0],
         lineWidth: 0.1,
       },
-      bodyStyles: {
-        fontSize: 8,
-        lineColor: [0, 0, 0],
-        lineWidth: 0.1,
-      },
-      head: [["Description", "Qty", "Unit", "Rate", "Amount", "Remarks"]],
+      head: [["Particulars", "Qty", "Unit", "Rate", "Amount", "Remarks"]],
       body: tableDataA.map((row) => {
         const { description, quantity, unit, rate, remarks } = row;
         return [description, quantity, unit, rate, quantity * rate, remarks];
@@ -122,7 +137,7 @@ export const generatePDF = (
       // foot: [["Subtotal", "", "", "", `${totalSumA}   AED`, ""]],
       foot: [
         [
-          "Subtotal",
+          "",
           "",
           "",
           "",
@@ -135,14 +150,15 @@ export const generatePDF = (
       ],
       theme: "striped",
     });
-    currY = currY + tableDataA.length * 6 + 23;
+    currY = currY + tableDataA.length * 6 + 10;
   }
 
+  // Materials Table
   if (tableData[0].description !== "") {
-    doc.text(`MATERIALS:`, xLeft, currY);
+    // doc.text(`MATERIALS:`, xLeft, currY);
     currY += 2;
     doc.autoTable({
-      startY: currY,
+      // startY: currY,
       columnStyles: {
         0: { columnWidth: 85 },
         1: { columnWidth: 12 },
@@ -171,14 +187,14 @@ export const generatePDF = (
         lineColor: [0, 0, 0],
         lineWidth: 0.1,
       },
-      head: [["Description", "Qty", "Unit", "Rate", "Amount", "Remarks"]],
+      head: [["Materials", "Qty", "Unit", "Rate", "Amount", "Remarks"]],
       body: tableData.map((row) => {
         const { description, quantity, unit, rate, remarks } = row;
         return [description, quantity, unit, rate, quantity * rate, remarks];
       }),
       foot: [
         [
-          "Subtotal",
+          "",
           "",
           "",
           "",
@@ -194,36 +210,111 @@ export const generatePDF = (
     currY = currY + tableData.length * 6 + 20;
   }
 
-  // Total
-  const totalrow = [
-    [
-      `TOTAL:`,
-      `${totalFinalSum.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}   AED`,
-    ],
-  ];
-  doc.autoTable({
-    startY: currY,
-    columnStyles: {
-      0: { halign: "left" },
-      1: { halign: "right" },
-    },
-    body: [totalrow[0]],
-    theme: "striped",
-  });
-
-  currY += 15;
-
-  if (tableDataB[0].description !== "") {
-    doc.text(`SCOPE OF WORK:`, xLeft, currY);
-    currY += 2;
+  // Total row
+  // Corporate Discount row
+  if (corpDiscount > 0) {
+    const totalrow = [
+      [
+        `Subtotal:`,
+        `${totalFinalSum.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}   AED`,
+      ],
+    ];
+    const discRow = [
+      [
+        `Corporate Discount: ${corpDiscount * 100}%`,
+        `(${corpDiscountAmt.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })})   AED`,
+      ],
+    ];
+    const discountedTotalRow = [
+      [
+        `TOTAL:`,
+        `${discountedTotalFinalSum.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}   AED`,
+      ],
+    ];
     doc.autoTable({
-      startY: currY,
+      columnStyles: {
+        0: { columnWidth: 132, halign: "left" },
+      },
+      headStyles: {
+        fontStyle: "normal",
+        fontSize: 8,
+        fillColor: [210, 210, 210],
+        textColor: [0, 0, 0],
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
       bodyStyles: {
         fontSize: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
       },
+      footStyles: {
+        fontStyle: "bold",
+        fillColor: [250, 240, 0],
+        fontSize: 8,
+        textColor: [0, 0, 0],
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      head: [totalrow[0]],
+      body: [discRow[0]],
+      foot: [discountedTotalRow[0]],
+      theme: "striped",
+    });
+
+    totalFinalSum = discountedTotalFinalSum; // for when it is needed to export the final sum
+  } else {
+    const totalrow = [
+      [
+        `TOTAL:`,
+        `${totalFinalSum.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}   AED`,
+      ],
+    ];
+    doc.autoTable({
+      columnStyles: {
+        0: { columnWidth: 132, halign: "left" },
+      },
+      bodyStyles: {
+        fontStyle: "bold",
+        fillColor: [250, 240, 0],
+        fontSize: 8,
+        textColor: [0, 0, 0],
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      body: [totalrow[0]],
+      theme: "plain",
+    });
+  }
+
+  if (tableDataB[0].description !== "") {
+    const scopeOfWork = [[`Scope of Work`, "Remarks"]];
+    doc.autoTable({
+      headStyles: {
+        halign: "center",
+        fillColor: [120, 120, 120],
+        fontSize: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      bodyStyles: {
+        fontSize: 8,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.1,
+      },
+      head: [scopeOfWork[0]],
       body: tableDataB.map((row) => {
         const { description, remarks } = row;
         return [description, remarks];

@@ -82,7 +82,7 @@ const App = () => {
         {
           name: "input_5",
           label: "Corporate discount (%):",
-          placeholder: "This is optional",
+          placeholder: "This is optional. Do not include the '%' sign.",
         },
       ],
       INV: [
@@ -112,7 +112,7 @@ const App = () => {
         {
           name: "input_5",
           label: "Corporate discount (%):",
-          placeholder: "This is optional",
+          placeholder: "This is optional. Do not include the '%' sign.",
         },
       ],
       QUOTE: [
@@ -146,22 +146,24 @@ const App = () => {
         {
           name: "input_5",
           label: "Project Duration:",
-          placeholder: "Total number of working days/hours",
+          placeholder:
+            "Estimate total number of working days/hours. e.g. '5 days'",
         },
         {
           name: "input_6",
           label: "Corporate discount (%):",
-          placeholder: "This is optional",
+          placeholder: "This is optional. Do not include the '%' sign.",
         },
         {
           name: "input_7",
           label: "Warranty:",
-          placeholder: "Number of years warranty is valid",
+          placeholder: "This is optional. e.g. '2 years', '6 months', etc.",
         },
         {
           name: "input_8",
           label: "Downpayment (%):",
-          placeholder: "Initial payment from client to begin work",
+          placeholder:
+            "Initial payment from client to begin work. Do not include the '%' sign.",
         },
       ],
       SOA: [
@@ -195,7 +197,7 @@ const App = () => {
         {
           name: "input_5",
           label: "Corporate discount (%):",
-          placeholder: "This is optional",
+          placeholder: "This is optional. Do not include the '%' sign.",
         },
       ],
       PAYROLL: [
@@ -343,7 +345,7 @@ const App = () => {
                     values[index].remarks = e.target.value;
                     setFieldsA(values);
                   }}
-                  placeholder="Comments"
+                  placeholder="Optional comments"
                   className="remarksField"
                 />
               </td>
@@ -481,7 +483,7 @@ const App = () => {
                     values[index].remarks = e.target.value;
                     setFields(values);
                   }}
-                  placeholder="Comments"
+                  placeholder="Optional comments"
                   className="remarksField"
                 />
               </td>
@@ -569,7 +571,7 @@ const App = () => {
                     values[index].remarksB = e.target.value;
                     setFieldsB(values);
                   }}
-                  placeholder="Comments"
+                  placeholder="Optional comments"
                   className="remarksFieldB"
                 />
               </td>
