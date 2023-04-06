@@ -259,7 +259,7 @@ export const generatePDF = (
       },
       footStyles: {
         fontStyle: "bold",
-        fillColor: [250, 240, 0],
+        fillColor: [250, 240, 0], // lime
         fontSize: 8,
         textColor: [0, 0, 0],
         lineColor: [0, 0, 0],
@@ -273,22 +273,34 @@ export const generatePDF = (
 
     totalFinalSum = discountedTotalFinalSum; // for when it is needed to export the final sum
   } else {
-    const totalrow = [
-      [
-        `TOTAL:`,
-        `${totalFinalSum.toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}   AED`,
-      ],
-    ];
+    const totalrow =
+      selectedOption !== "ACKRECEIPT"
+        ? [
+            [
+              `TOTAL:`,
+              `${totalFinalSum.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}   AED`,
+            ],
+          ]
+        : [
+            [
+              `TOTAL PAID:`,
+              `${totalFinalSum.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}   AED`,
+            ],
+          ];
+
     doc.autoTable({
       columnStyles: {
         0: { columnWidth: 132, halign: "left" },
       },
       bodyStyles: {
         fontStyle: "bold",
-        fillColor: [250, 240, 0],
+        fillColor: [250, 240, 0], // lime
         fontSize: 8,
         textColor: [0, 0, 0],
         lineColor: [0, 0, 0],
