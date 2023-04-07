@@ -503,7 +503,6 @@ const App = () => {
   const [particularsFieldsB, setFieldsB] = useState([
     {
       descriptionB: "",
-      // amountB: "",
       remarksB: "",
     },
   ]);
@@ -512,7 +511,6 @@ const App = () => {
       ...particularsFieldsB,
       {
         descriptionB: "",
-        // amountB: "",
         remarksB: "",
       },
     ]);
@@ -529,7 +527,6 @@ const App = () => {
         <thead>
           <tr>
             <th>Description</th>
-            {/* <th>Labor Fee</th> */}
             <th>Remarks</th>
           </tr>
         </thead>
@@ -549,19 +546,6 @@ const App = () => {
                   className="descriptionFieldB"
                 />
               </td>
-              {/* <td>
-                <input
-                  type="number"
-                  value={field.amountB}
-                  onChange={(e) => {
-                    const values = [...particularsFieldsB];
-                    values[index].amountB = e.target.value;
-                    setFieldsB(values);
-                  }}
-                  placeholder="AED"
-                  className="totalFieldB"
-                />
-              </td> */}
               <td>
                 <input
                   type="text"
@@ -647,11 +631,9 @@ const App = () => {
 
     const tableDataB = particularsFieldsB.map((field) => ({
       description: field.descriptionB,
-      // amount: field.amountB,
       remarks: field.remarksB,
     }));
 
-    // Call the generatePDF function
     try {
       generatePDF(selectedOption, inputData, tableDataA, tableData, tableDataB);
     } catch (error) {}
