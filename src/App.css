@@ -13,6 +13,8 @@ body {
 .dropdownLabel,
 #dropdown {
   margin-left: 20px;
+  margin-bottom: 20px;
+  margin-right: 10px;
 }
 
 .labels,

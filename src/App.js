@@ -646,6 +646,7 @@ const App = () => {
     <div className="App">
       <div>
         <button className="ImportJSONButton">Load Data</button>
+        <button className="SaveJSONButton">Save Data</button>
       </div>
 
       <label htmlFor="dropdown" className="dropdownLabel">
@@ -720,7 +721,6 @@ const App = () => {
         Generate pdf
       </button>
       <button className="GenerateButton">Generate xlsx</button>
-      <button className="SaveJSONButton">Save Data</button>
     </div>
   );
 };
