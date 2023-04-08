@@ -381,7 +381,7 @@ export const generatePDF = (
     );
   } else if (selectedOption !== "PAYROLL") {
     doc.save(
-      `${selectedOption} - ${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
+      `${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
     );
   } else {
     doc.save(`${inputData.input_1} - ${inputData.input_0}.pdf`);

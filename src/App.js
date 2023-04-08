@@ -716,6 +716,8 @@ const App = () => {
         Generate pdf
       </button>
       <button className="GenerateButton">Generate xlsx</button>
+      <button className="SaveJSONButton">Save JSON</button>
+      <button className="ImportJSONButton">Import JSON</button>
     </div>
   );
 };
