@@ -88,11 +88,13 @@ export const generatePDF = (
     doc.text(`${inputData.input_4}`, centerX, 57); // Add the centered text to the PDF document
     currY = 62;
   } else {
-    textWidth = doc.getTextWidth(inputData.input_2); // for PAYROLL, title is index #2
+    textWidth =
+      doc.getTextWidth(inputData.input_2) +
+      doc.getTextWidth(inputData.input_0 + 3); // for PAYROLL, title is index #2
     const pageWidth = doc.internal.pageSize.width;
     const centerX = (pageWidth - textWidth) / 2;
-    doc.text(`${inputData.input_2}`, centerX, 42); // Add the centered text to the PDF document
-    currY = 47;
+    doc.text(`${inputData.input_2} - ${inputData.input_0}`, centerX, 45); // Add the centered text to the PDF document
+    currY = 50;
   }
 
   // Particulars Table

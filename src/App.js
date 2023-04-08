@@ -210,7 +210,7 @@ const App = () => {
         {
           name: "input_1",
           label: "Payroll #:",
-          placeholder: "This field is optional",
+          placeholder: "e.g. 'PRL0023'",
         },
         {
           name: "input_2",
@@ -644,6 +644,10 @@ const App = () => {
   // JSX
   return (
     <div className="App">
+      <div>
+        <button className="ImportJSONButton">Load Data</button>
+      </div>
+
       <label htmlFor="dropdown" className="dropdownLabel">
         Select Document Type:
       </label>
@@ -672,7 +676,7 @@ const App = () => {
       </div>
       <div className="separator"></div>
 
-      <div>{renderTableFieldsA()}</div>
+      <div className="TableFieldsA">{renderTableFieldsA()}</div>
       <div>
         <button className="AddItemButton" onClick={handleAddFieldA}>
           Add Item
@@ -689,7 +693,7 @@ const App = () => {
       </div>
       <div className="separator"></div>
 
-      <div>{renderTableFields()}</div>
+      <div className="TableFields">{renderTableFields()}</div>
       <div>
         <button className="AddItemButton" onClick={handleAddField}>
           Add Item
@@ -705,7 +709,7 @@ const App = () => {
       </div>
       <div className="separator"></div>
 
-      <div>{renderTableFieldsB()}</div>
+      <div className="TableFieldsB">{renderTableFieldsB()}</div>
       <div>
         <button className="AddItemButton" onClick={handleAddFieldB}>
           Add Item
@@ -716,8 +720,7 @@ const App = () => {
         Generate pdf
       </button>
       <button className="GenerateButton">Generate xlsx</button>
-      <button className="SaveJSONButton">Save JSON</button>
-      <button className="ImportJSONButton">Import JSON</button>
+      <button className="SaveJSONButton">Save Data</button>
     </div>
   );
 };
