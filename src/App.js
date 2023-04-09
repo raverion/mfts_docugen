@@ -107,7 +107,8 @@ const App = () => {
         {
           name: "input_4",
           label: "Title:",
-          placeholder: "Summarize the project in 10 words or less",
+          placeholder:
+            "Summarize the project in 10 words or less. If AMC, include reference number.",
         },
         {
           name: "input_5",
