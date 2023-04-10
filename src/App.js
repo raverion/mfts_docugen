@@ -8,10 +8,46 @@ const App = () => {
     document.title = "MFTS Docugen";
   }, []);
 
-  //-------------------------------------------------------------------------------------------------------
-  // HEADER FIELDS
   const [selectedOption, setSelectedOption] = useState("");
   const [inputFields, setInputFields] = useState([]);
+  const [particularsFieldsA, setFieldsA] = useState([
+    {
+      description: "",
+      quantity: "",
+      unit: "",
+      rate: "",
+      total: "",
+      remarks: "",
+    },
+  ]);
+  const [particularsFields, setFields] = useState([
+    {
+      description: "",
+      quantity: "",
+      unit: "",
+      rate: "",
+      total: "",
+      remarks: "",
+    },
+  ]);
+  const [particularsFieldsB, setFieldsB] = useState([
+    {
+      descriptionB: "",
+      remarksB: "",
+    },
+  ]);
+
+  //-------------------------------------------------------------------------------------------------------
+  // Load and Save Data functions
+  const handleSaveData = () => {
+    alert("This feature is not yet available.");
+  };
+  const handleLoadData = () => {
+    alert("This feature is not yet available.");
+  };
+
+  //-------------------------------------------------------------------------------------------------------
+  // HEADER FIELDS functions
   const handleOptionChange = (e) => {
     const value = e.target.value;
     setSelectedOption(value);
@@ -226,17 +262,7 @@ const App = () => {
   //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
-  // TABLE FIELDS - MATERIALS
-  const [particularsFieldsA, setFieldsA] = useState([
-    {
-      description: "",
-      quantity: "",
-      unit: "",
-      rate: "",
-      total: "",
-      remarks: "",
-    },
-  ]);
+  // TABLE FIELDS - MATERIALS functions
   const handleAddFieldA = () => {
     setFieldsA([
       ...particularsFieldsA,
@@ -364,17 +390,7 @@ const App = () => {
   //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
-  // TABLE FIELDS - MATERIALS
-  const [particularsFields, setFields] = useState([
-    {
-      description: "",
-      quantity: "",
-      unit: "",
-      rate: "",
-      total: "",
-      remarks: "",
-    },
-  ]);
+  // TABLE FIELDS - MATERIALS functions
   const handleAddField = () => {
     setFields([
       ...particularsFields,
@@ -500,13 +516,7 @@ const App = () => {
   //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
-  // TABLE FIELDS - SCOPE OF WORK
-  const [particularsFieldsB, setFieldsB] = useState([
-    {
-      descriptionB: "",
-      remarksB: "",
-    },
-  ]);
+  // TABLE FIELDS - SCOPE OF WORK functions
   const handleAddFieldB = () => {
     setFieldsB([
       ...particularsFieldsB,
@@ -574,6 +584,7 @@ const App = () => {
   //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
+  // GeneratePDF data handling
   const handleGeneratePDF = () => {
     // Prepare the input data for the PDF document
     let inputData = {};
@@ -642,12 +653,16 @@ const App = () => {
   //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------------------------------------------------------------------------------
-  // JSX
+  // Skeletal JSX
   return (
     <div className="App">
       <div>
-        <button className="ImportJSONButton">Load Data</button>
-        <button className="SaveJSONButton">Save Data</button>
+        <button className="LoadDataButton" onClick={handleLoadData}>
+          Load Data
+        </button>
+        <button className="SaveDataButton" onClick={handleSaveData}>
+          Save Data
+        </button>
       </div>
 
       <label htmlFor="dropdown" className="dropdownLabel">
@@ -721,7 +736,14 @@ const App = () => {
       <button className="GenerateButton" onClick={handleGeneratePDF}>
         Generate pdf
       </button>
-      <button className="GenerateButton">Generate xlsx</button>
+      <button
+        className="GenerateButton"
+        onClick={() => {
+          alert("This feature is not yet available.");
+        }}
+      >
+        Generate xlsx
+      </button>
     </div>
   );
 };

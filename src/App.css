@@ -5,10 +5,14 @@ body {
 .App {
 }
 
-.ImportJSONButton {
+.LoadDataButton {
   margin-left: 20px;
   margin-bottom: 20px;
   margin-top: 20px;
+}
+.SaveDataButton {
+  margin-top: 30px;
+  margin-left: 20px;
 }
 .dropdownLabel,
 #dropdown {
@@ -95,11 +99,6 @@ body {
 }
 
 .GenerateButton {
-  margin-top: 30px;
-  margin-left: 20px;
-}
-
-.SaveJSONButton {
   margin-top: 30px;
   margin-left: 20px;
 }
