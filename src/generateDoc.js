@@ -381,6 +381,10 @@ export const generatePDF = (
     doc.save(
       `${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
     );
+  } else if (selectedOption === "ACKRECEIPT") {
+    doc.save(
+      `ACKRECEIPT - ${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
+    );
   } else if (selectedOption !== "PAYROLL") {
     doc.save(
       `${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
