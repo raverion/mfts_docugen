@@ -59,7 +59,15 @@ export const generatePDF = (
   if (selectedOption !== "PAYROLL") {
     // Add content to the PDF document using the input data
     doc.text(`To: ${inputData.input_0}`, xLeft, 35); // To
-    doc.text(`Address: ${inputData.input_1}`, xLeft, 40); // Address
+    alert(inputData.input_6);
+    if (selectedOption === "INV") {
+      doc.text(`TRN: ${inputData.input_6}`, xLeft, 40);
+      doc.text(`Address: ${inputData.input_1}`, xLeft, 45); // Address
+      currY = 55;
+    } else {
+      doc.text(`Address: ${inputData.input_1}`, xLeft, 40); // Address
+      currY = 50;
+    }
     doc.text(`Date: ${inputData.input_2}`, xRight, 35); // Date
     doc.text(`Quote/Invoice#: ${inputData.input_3}`, xRight, 40); // DocNum
   }
@@ -67,26 +75,27 @@ export const generatePDF = (
   // Document Type
   doc.setFontSize(14);
   if (selectedOption === "ACKRECEIPT") {
-    doc.text(`ACKNOWLEDGEMENT RECEIPT`, 70, 50);
+    doc.text(`ACKNOWLEDGEMENT RECEIPT`, 70, currY);
   } else if (selectedOption === "INV") {
-    doc.text(`INVOICE`, 95, 50);
+    doc.text(`INVOICE`, 95, currY);
   } else if (selectedOption === "QUOTE") {
-    doc.text(`QUOTATION`, 90, 50);
+    doc.text(`QUOTATION`, 90, currY);
   } else if (selectedOption === "SOA") {
-    doc.text(`STATEMENT OF ACCOUNT`, 70, 50);
+    doc.text(`STATEMENT OF ACCOUNT`, 70, currY);
   } else if (selectedOption === "PAYROLL") {
-    doc.text(`PAYROLL`, 95, 40);
+    doc.text(`PAYROLL`, 95, currY);
   }
 
   // Title of the Document. Set the text to center align
+  currY = currY + 7;
   let textWidth = 0;
   doc.setFontSize(11);
   if (selectedOption !== "PAYROLL") {
     textWidth = doc.getTextWidth(inputData.input_4);
     const pageWidth = doc.internal.pageSize.width;
     const centerX = (pageWidth - textWidth) / 2;
-    doc.text(`${inputData.input_4}`, centerX, 57); // Add the centered text to the PDF document
-    currY = 62;
+    doc.text(`${inputData.input_4}`, centerX, currY); // Add the centered text to the PDF document
+    currY = currY + 5;
   } else {
     textWidth =
       doc.getTextWidth(inputData.input_2) +

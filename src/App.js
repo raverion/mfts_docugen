@@ -11,7 +11,7 @@ const App = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [inputFields, setInputFields] = useState([]);
   const [particularsFieldsA, setFieldsA] = useState([
-    {
+    JSON.parse(localStorage.getItem("particularsFields")) || {
       description: "",
       quantity: "",
       unit: "",
@@ -21,7 +21,7 @@ const App = () => {
     },
   ]);
   const [particularsFields, setFields] = useState([
-    {
+    JSON.parse(localStorage.getItem("particularsFields")) || {
       description: "",
       quantity: "",
       unit: "",
@@ -31,7 +31,7 @@ const App = () => {
     },
   ]);
   const [particularsFieldsB, setFieldsB] = useState([
-    {
+    JSON.parse(localStorage.getItem("particularsFields")) || {
       descriptionB: "",
       remarksB: "",
     },
@@ -120,6 +120,11 @@ const App = () => {
           label: "Corporate discount (%):",
           placeholder: "This is optional. Do not include the '%' sign.",
         },
+        {
+          name: "input_6",
+          label: "Tax Registration Number:",
+          placeholder: "TRN of client. This is optional.",
+        },
       ],
       INV: [
         // Invoice
@@ -150,6 +155,11 @@ const App = () => {
           name: "input_5",
           label: "Corporate discount (%):",
           placeholder: "This is optional. Do not include the '%' sign.",
+        },
+        {
+          name: "input_6",
+          label: "Tax Registration Number:",
+          placeholder: "TRN of client. This is optional.",
         },
       ],
       QUOTE: [
@@ -609,6 +619,7 @@ const App = () => {
           input_3: inputFields[3].input_3, // Invoice No.
           input_4: inputFields[4].input_4, // Title
           input_5: inputFields[5].input_5, // Corporate Discount
+          input_6: inputFields[6].input_6,
         };
       } else {
         inputData = {
