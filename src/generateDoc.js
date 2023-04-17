@@ -59,8 +59,7 @@ export const generatePDF = (
   if (selectedOption !== "PAYROLL") {
     // Add content to the PDF document using the input data
     doc.text(`To: ${inputData.input_0}`, xLeft, 35); // To
-    alert(inputData.input_6);
-    if (selectedOption === "INV") {
+    if (selectedOption === "INV" && inputData.input_6 !== "") {
       doc.text(`TRN: ${inputData.input_6}`, xLeft, 40);
       doc.text(`Address: ${inputData.input_1}`, xLeft, 45); // Address
       currY = 55;
