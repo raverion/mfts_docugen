@@ -118,7 +118,8 @@ const App = () => {
         {
           name: "input_5",
           label: "Corporate discount (%):",
-          placeholder: "This is optional. Do not include the '%' sign.",
+          placeholder:
+            "Optional. Include '%' for percentage, otherwise absolute.",
         },
         {
           name: "input_6",
@@ -154,7 +155,8 @@ const App = () => {
         {
           name: "input_5",
           label: "Corporate discount (%):",
-          placeholder: "This is optional. Do not include the '%' sign.",
+          placeholder:
+            "Optional. Include '%' for percentage, otherwise absolute.",
         },
         {
           name: "input_6",
@@ -199,7 +201,8 @@ const App = () => {
         {
           name: "input_6",
           label: "Corporate discount (%):",
-          placeholder: "This is optional. Do not include the '%' sign.",
+          placeholder:
+            "Optional. Include '%' for percentage, otherwise absolute.",
         },
         {
           name: "input_7",
@@ -244,7 +247,8 @@ const App = () => {
         {
           name: "input_5",
           label: "Corporate discount (%):",
-          placeholder: "This is optional. Do not include the '%' sign.",
+          placeholder:
+            "Optional. Include '%' for percentage, otherwise absolute.",
         },
       ],
       PAYROLL: [

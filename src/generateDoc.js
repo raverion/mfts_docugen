@@ -35,7 +35,16 @@ export const generatePDF = (
   } else {
     corpDiscount = 0;
   }
-  let corpDiscountAmt = (totalFinalSum * corpDiscount) / 100;
+
+  let corpDiscountAmt;
+  if (typeof (corpDiscount === "string") && corpDiscount.includes("%")) {
+    // if % sign
+    let _corpDiscount = corpDiscount.substring(0, corpDiscount.length - 1);
+    corpDiscountAmt = (totalFinalSum * _corpDiscount) / 100;
+  } else {
+    // if no % sign
+    corpDiscountAmt = corpDiscount;
+  }
   let discountedTotalFinalSum = totalFinalSum - corpDiscountAmt;
 
   // y-coordinate tracker
@@ -222,7 +231,7 @@ export const generatePDF = (
 
   // Total row
   // Corporate Discount row
-  if (corpDiscount > 0) {
+  if (corpDiscount !== "") {
     const totalrow = [
       [
         `Subtotal:`,
@@ -234,7 +243,7 @@ export const generatePDF = (
     ];
     const discRow = [
       [
-        `Corporate Discount: ${corpDiscount}%`,
+        `Corporate Discount: ${corpDiscount}`,
         `(${corpDiscountAmt.toLocaleString("en-US", {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
