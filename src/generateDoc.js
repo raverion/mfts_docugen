@@ -250,15 +250,26 @@ export const generatePDF = (
         })})   AED`,
       ],
     ];
-    const discountedTotalRow = [
-      [
-        `TOTAL:`,
-        `${discountedTotalFinalSum.toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}   AED`,
-      ],
-    ];
+    const discountedTotalRow =
+      selectedOption !== "ACKRECEIPT"
+        ? [
+            [
+              `TOTAL:`,
+              `${discountedTotalFinalSum.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}   AED`,
+            ],
+          ]
+        : [
+            [
+              `TOTAL PAID:`,
+              `${discountedTotalFinalSum.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}   AED`,
+            ],
+          ];
     doc.autoTable({
       columnStyles: {
         0: { columnWidth: 132, halign: "left" },
