@@ -37,13 +37,15 @@ export const generatePDF = (
   }
 
   let corpDiscountAmt;
-  if (typeof (corpDiscount === "string") && corpDiscount.includes("%")) {
-    // if % sign
-    let _corpDiscount = corpDiscount.substring(0, corpDiscount.length - 1);
-    corpDiscountAmt = (totalFinalSum * _corpDiscount) / 100;
-  } else {
-    // if no % sign
-    corpDiscountAmt = corpDiscount;
+  if (selectedOption !== "PAYROLL") {
+    if (typeof (corpDiscount === "string") && corpDiscount.includes("%")) {
+      // if % sign
+      let _corpDiscount = corpDiscount.substring(0, corpDiscount.length - 1);
+      corpDiscountAmt = (totalFinalSum * _corpDiscount) / 100;
+    } else {
+      // if no % sign
+      corpDiscountAmt = corpDiscount;
+    }
   }
   let discountedTotalFinalSum = totalFinalSum - corpDiscountAmt;
 
@@ -78,6 +80,8 @@ export const generatePDF = (
     }
     doc.text(`Date: ${inputData.input_2}`, xRight, 35); // Date
     doc.text(`Quote/Invoice#: ${inputData.input_3}`, xRight, 40); // DocNum
+  } else {
+    currY = 38;
   }
 
   // Document Type
@@ -91,7 +95,8 @@ export const generatePDF = (
   } else if (selectedOption === "SOA") {
     doc.text(`STATEMENT OF ACCOUNT`, 70, currY);
   } else if (selectedOption === "PAYROLL") {
-    doc.text(`PAYROLL`, 95, currY);
+    alert(selectedOption);
+    doc.text(`PAYROLL ${inputData.input_1}`, 83, currY);
   }
 
   // Title of the Document. Set the text to center align
@@ -104,7 +109,7 @@ export const generatePDF = (
     const centerX = (pageWidth - textWidth) / 2;
     doc.text(`${inputData.input_4}`, centerX, currY); // Add the centered text to the PDF document
     currY = currY + 5;
-  } else {
+  } else if (selectedOption === "PAYROLL") {
     textWidth =
       doc.getTextWidth(inputData.input_2) +
       doc.getTextWidth(inputData.input_0 + 3); // for PAYROLL, title is index #2
@@ -231,7 +236,7 @@ export const generatePDF = (
 
   // Total row
   // Corporate Discount row
-  if (corpDiscount !== "") {
+  if (corpDiscount !== "" && selectedOption !== "PAYROLL") {
     const totalrow = [
       [
         `Subtotal:`,
@@ -302,7 +307,7 @@ export const generatePDF = (
     });
 
     totalFinalSum = discountedTotalFinalSum; // for when it is needed to export the final sum
-  } else {
+  } else if (corpDiscount !== "" || selectedOption === "PAYROLL") {
     const totalrow =
       selectedOption !== "ACKRECEIPT"
         ? [
@@ -417,7 +422,7 @@ export const generatePDF = (
     doc.save(
       `${inputData.input_3} - ${inputData.input_2} - ${inputData.input_0}.pdf`
     );
-  } else {
+  } else if (selectedOption === "PAYROLL") {
     doc.save(`${inputData.input_1} - ${inputData.input_0}.pdf`);
   }
 };
