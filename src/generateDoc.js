@@ -95,7 +95,6 @@ export const generatePDF = (
   } else if (selectedOption === "SOA") {
     doc.text(`STATEMENT OF ACCOUNT`, 70, currY);
   } else if (selectedOption === "PAYROLL") {
-    alert(selectedOption);
     doc.text(`PAYROLL ${inputData.input_1}`, 83, currY);
   }
 
