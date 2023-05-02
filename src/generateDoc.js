@@ -306,7 +306,7 @@ export const generatePDF = (
     });
 
     totalFinalSum = discountedTotalFinalSum; // for when it is needed to export the final sum
-  } else if (corpDiscount !== "" || selectedOption === "PAYROLL") {
+  } else if (corpDiscount === "" || selectedOption === "PAYROLL") {
     const totalrow =
       selectedOption !== "ACKRECEIPT"
         ? [
